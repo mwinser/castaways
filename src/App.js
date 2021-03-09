@@ -5,7 +5,7 @@ import { Context } from './Context';
 
 
 function App() {
-  const {players, voteOff, removePlayer, increaseLoyalty} = useContext(Context)
+  const {playerState, voteOff, removePlayer, increaseLoyalty} = useContext(Context)
   
   function handleVote(){
     const voteLog = voteOff()
@@ -16,10 +16,11 @@ function App() {
     console.log(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
     removePlayer(voteLog.loserName)
   }
+  
 
   return (
     <div className="fullscreen">
-      {players.map((player, index)=>(
+      {playerState.map((player, index)=>(
           <PlayerCard key={index} player={player}/>
       ))
       }
