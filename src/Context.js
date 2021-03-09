@@ -11,8 +11,20 @@ function ContextProvider ({children}) {
             case 'REMOVE_PLAYER':
                 return [...playerState.filter((player)=>player.name!==action.payload)];
             case 'CHANGE_LOYALTY':
-                return [...playerState]
-            default:
+                const player = playerState.find((player)=>player.name===action.payload.playerName)
+                
+                return [
+                    ...playerState.filter((player)=>player.name!==action.payload.playerName), 
+                    {
+                    ...player,
+                    loyalty: 
+                        {
+                        ...player.loyalty, 
+                        [action.payload.rivalName]: Math.max(0, Math.min(100, player.loyalty[action.payload.rivalName]+action.payload.amount))
+                        }
+                    }
+                    ]
+            default: 
                 return playerState;
         }
     }
@@ -23,18 +35,14 @@ function ContextProvider ({children}) {
         })
     }
 
-    function changeLoyalty(playerName, rivalName, diff){
+    function changeLoyalty(playerName, rivalName, amount){
         
         dispatch({
             type: "CHANGE_LOYALTY",
-            payload: {player: playerName, rival: rivalName, amount: diff}
+            payload: {playerName, rivalName, amount}
         })
-
-        playerState.forEach(player=> {
-            if (player.name===playerName) {
-                player.loyalty[rivalName] = (player.loyalty[rivalName]>=(100-diff)? 100 : player.loyalty[rivalName] + diff)
-            }
-        })
+        
+        
     }
 
     function voteOff() {
