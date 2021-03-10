@@ -1,5 +1,6 @@
 import React, {useReducer} from 'react'
 import playerData from './player_data'
+import {onePlayerEvents, twoPlayerEvents} from './randomEvent'
 
 const Context = React.createContext(null)
 
@@ -80,7 +81,38 @@ function ContextProvider ({children}) {
         return voteLog
     }
     
-    
+    function randomPlayers(number){
+        const output = []
+        var playerNames = playerState.map(player=>player.name)
+        for (var i=0;i<number;i++) {
+            const selected = ~~(Math.random()*playerNames.length)
+            output.push(playerNames[selected])
+            playerNames = playerNames.filter((name, index)=>index!==selected)
+        }
+        return output
+    }
+    function randomSocialEvent() {
+        const numInvolved = ~~(Math.random()*2)+1
+        const playersInvolved = randomPlayers(numInvolved)
+        
+        switch (numInvolved){
+            case 1:
+                var {string, change} = onePlayerEvents[~~(Math.random()*onePlayerEvents.length)]
+                console.log(playersInvolved[0] + string + ' Group loyalty changed by ' + change)
+                const everyoneElse = playerData.filter(player=>player.name!==playersInvolved[0]).map(player=>player.name)
+                everyoneElse.map(playerName=>changeLoyalty(playerName,playersInvolved[0], change))
+                return null
+            case 2:
+                var {string, change} = twoPlayerEvents[~~(Math.random()*twoPlayerEvents.length)]
+
+                console.log(playersInvolved[0] + " and " + playersInvolved[1] + string + ' Loyalty changed by ' + change)
+                changeLoyalty(playersInvolved[0], playersInvolved[1], change)
+                changeLoyalty(playersInvolved[1], playersInvolved[0], change)
+                return null
+            default:
+                return null
+        }
+    }
 
     
     return(
@@ -89,7 +121,8 @@ function ContextProvider ({children}) {
                 playerState,
                 voteOff,
                 removePlayer,
-                changeLoyalty
+                changeLoyalty,
+                randomSocialEvent
             }}
         >
             {children}

@@ -5,7 +5,7 @@ import { Context } from './Context';
 
 
 function App() {
-  const {playerState, voteOff, removePlayer, changeLoyalty} = useContext(Context)
+  const {playerState, voteOff, removePlayer, randomSocialEvent} = useContext(Context)
 
   function handleVote(){
     const voteLog = voteOff()
@@ -33,12 +33,20 @@ function App() {
 
   return (
     <div className="fullscreen">
-      {playerState.sort(comparePlayerNames).map((player, index)=>(
-          <PlayerCard key={index} player={player}/>
-      ))
-      }
-      <button onClick={()=>handleVote()}>VoteOff</button>
-      <button onClick={()=>changeLoyalty("Mary", "Dan", -150)}>Mary likes Dan more</button>
+      <div className="header">
+        Castaways
+      </div>
+      <div className="content">
+        {playerState.sort(comparePlayerNames).map((player, index)=>(
+            <PlayerCard key={index} player={player}/>
+        ))
+        }
+      </div>
+      <div className="footer">
+        <button onClick={()=>handleVote()}>VoteOff</button>
+      <button onClick={()=>randomSocialEvent()}>Random</button>
+      </div>
+      
     </div>
   )
 }
