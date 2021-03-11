@@ -126,9 +126,10 @@ function ContextProvider ({children}) {
     }
     function immunityChallenge(participants){
         // random type of challenge mental, physical, social
+        const trait = ["physical","mental", "social"][~~(Math.random()*3)]
         //calculate winner
-        const winnerName = participants.reduce((best, participant)=>participant["physical"]>best["physical"]? participant : best).name
-        console.log(winnerName + " has won immunity in a physical challenge!")
+        const winnerName = participants.reduce((best, participant)=>participant[trait]>best[trait]? participant : best).name
+        console.log(winnerName + " has won immunity in a "+ trait + " challenge!")
         //apply idol
         setPlayerIdol(winnerName, true)
 
