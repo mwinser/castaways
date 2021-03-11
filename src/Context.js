@@ -105,8 +105,9 @@ function ContextProvider ({children}) {
         var playerNames = playerState.map(player=>player.name)
         for (var i=0;i<number;i++) {
             const selected = ~~(Math.random()*playerNames.length)
-            output.push(playerNames[selected])
-            playerNames = playerNames.filter((name, index)=>index!==selected)
+            const selectedPlayer = playerNames[selected]
+            output.push(selectedPlayer)
+            playerNames = playerNames.filter((name)=>name!==selectedPlayer)
         }
         return output
     }
@@ -118,7 +119,7 @@ function ContextProvider ({children}) {
             case 1:
                 var {string, change} = onePlayerEvents[~~(Math.random()*onePlayerEvents.length)]
                 console.log(playersInvolved[0] + string + ' Group loyalty changed by ' + change)
-                const everyoneElse = playerData.filter(player=>player.name!==playersInvolved[0]).map(player=>player.name)
+                const everyoneElse = playerState.filter(player=>player.name!==playersInvolved[0]).map(player=>player.name)
                 everyoneElse.map(playerName=>changeLoyalty(playerName,playersInvolved[0], change))
                 return null
             case 2:
