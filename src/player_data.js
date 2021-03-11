@@ -130,10 +130,9 @@ function startingStats() {
         dexterity: ~~(Math.random()*20),
         intelligence: ~~(Math.random()*20),
         }
-        console.log(rando)
+    console.log(rando)
     playerData.push(rando)
-    
-    
+
     playerData.forEach(player=>{
         //set categories
         //Age
@@ -187,8 +186,12 @@ function startingStats() {
             default:
                 console.error(player.name + "'s job value ("+ player.job +") is invalid")
         }
+    })
+}
 
-        //starting loyalties based on similarity
+function startingLoyalties() {
+    //starting loyalties based on similarity
+    playerData.forEach(player=>{
         const loyaltyRatings = {}
         playerData.forEach(rival=>{
             const region = 20*(player.region===rival.region)
@@ -203,7 +206,8 @@ function startingStats() {
     })
 }
 
-startingStats()
 
+startingStats()
+startingLoyalties()
 
 export default playerData

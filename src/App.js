@@ -56,6 +56,9 @@ function App() {
           :
             <button onClick={()=>juryVote()}>Jury Vote</button>
         }
+        <div></div>
+        <button onClick={()=>console.table(juryPlayers.loyalty)}>Jury Players</button>
+        <button onClick={()=>console.log(playerState)}>Remaining Players</button>
         
       
       
