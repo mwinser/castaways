@@ -17,7 +17,7 @@ function App() {
     removePlayer(voteLog.loserName)
   }
   function juryVote(){
-    const voteLog = voteOff(juryPlayers.slice(1), playerState)
+    const voteLog = voteOff(juryPlayers, playerState)
     console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
   }
 

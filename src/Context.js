@@ -12,7 +12,6 @@ function ContextProvider ({children}) {
     function playersReducer(playerState, action){
         switch (action.type) {
             case 'REMOVE_PLAYER':
-                setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===action.payload)])
                 return [...playerState.filter((player)=>player.name!==action.payload)];
             case 'CHANGE_LOYALTY':
                 const player = playerState.find((player)=>player.name===action.payload.playerName)
@@ -33,6 +32,7 @@ function ContextProvider ({children}) {
         }
     }
     function removePlayer(name){
+        setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===name)])
         dispatch({
             type: "REMOVE_PLAYER",
             payload: name
