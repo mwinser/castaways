@@ -85,12 +85,9 @@ const playerData = [
     },
     {name: "Craig",
     age: 22,
-    age_category: 5,
     job: "Server",
-    job_category: 0,
     region: "Southwest",
     family: "Single",
-    family_category: 0,
     personality: 8,
     votesAgainst: 0,
     stamina: 13,
@@ -101,7 +98,34 @@ const playerData = [
 ]
 
 function startingStats() {
-    
+    var names = ["Sammy", "Barry", "Dan", "Candice", "Clementine", "Ziggy", "Adam", "Alex", "Ambrosia", "Tony", "Tina", "Jude", "DeShawn", "Mike", "Stevie", "Sam", "Elliot", "Rob", "Roberto", "Robbie", "Bobby", "Amy", "Beth", "Charlie", "Freya", "Dom", "Latoya"]
+    const jobs = ["Student", "Cop", "Lawyer"]
+    const regions = ["Northeast", "South", "Midwest", "Northwest", "Southwest"]
+    const families = ["Single", "Married", "Has Kids"]
+    //function to make sure no names are chosen twice
+    function pickName(){
+        let number = ~~(Math.random()*names.length)
+        let name = names[number]
+        names.splice(number, 1)
+        console.log(names)
+        return name
+    }
+    //create random player
+    const rando = {
+        name: pickName(),
+        age: 18 + ~~(Math.random()*(45-18)),
+        job: jobs[~~(Math.random()*jobs.length)],
+        region: regions[~~(Math.random()*regions.length)],
+        family: families[~~(Math.random()*families.length)],
+        personality: ~~(Math.random()*20),
+        votesAgainst: 0,
+        stamina: ~~(Math.random()*20),
+        willpower: ~~(Math.random()*20),
+        dexterity: ~~(Math.random()*20),
+        intelligence: ~~(Math.random()*20),
+        }
+        console.log(rando)
+    playerData.push(rando)
     
     
     playerData.forEach(player=>{
@@ -138,23 +162,20 @@ function startingStats() {
                 console.error(player.name + "'s family value ("+ player.family +") is invalid")
         }
         //Job
-        switch (player.job) {
-            case ("Unemployed"):
-            case ("Server"):
+        switch (true) {
+            case ["Unemployed", "Server","Student"].some(job=> job===player.job):
                 player.job_category = 0
                 break
-            case ("Powerplant Manager"):
+            case ["Powerplant Manager", "Construction Worker","Truck Driver"].some(job=> job===player.job):
                 player.job_category = 5
                 break
-            case ("Firefighter"):
+            case ["Firefighter", "Cop","Soldier"].some(job=> job===player.job):
                 player.job_category = 10
                 break
-            case ("Therapist"):
-            case ("Astrophysicist"):
+            case ["Therapist", "Astrophysicist","Professor"].some(job=> job===player.job):    
                 player.job_category = 15
                 break
-            case ("Life Coach"):
-            case ("Stock Broker"):
+            case ["Life Coach", "Stock Broker","Lawyer"].some(job=> job===player.job):
                 player.job_category = 20
                 break
             default:
