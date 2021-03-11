@@ -1,12 +1,9 @@
 const playerData = [
     {name: "Sammy", 
     age: 28,
-    age_category: 10,
     job: "Unemployed",
-    job_category: 1,
     region: "South",
     family: "Single",
-    family_category: 0,
     personality:0,
     votesAgainst: 0,
     stamina: 5,
@@ -16,12 +13,9 @@ const playerData = [
     },
     {name: "Barry",
     age: 30,
-    age_category: 15,
     job: "Firefighter",
-    job_category: 3,
     region: "Midwest",
     family: "Married",
-    family_category: 10,
     personality: 6,
     votesAgainst: 0,
     stamina: 16,
@@ -31,12 +25,9 @@ const playerData = [
     },
     {name: "Dan",
     age: 38,
-    age_category: 15,
     job: "Powerplant Manager",
-    job_category: 2,
     region: "Southwest",
     family: "Has Kids",
-    family_category: 10,
     personality: 20,
     votesAgainst: 0,
     stamina: 7,
@@ -46,12 +37,9 @@ const playerData = [
     },
     {name: "Mary",
     age: 40,
-    age_category: 20,
     job: "Therapist",
-    job_category: 4,
     region: "Midwest",
     family: "Married",
-    family_category: 10,
     personality: 10,
     votesAgainst: 0,
     stamina: 5,
@@ -61,12 +49,9 @@ const playerData = [
     },
     {name: "Jude",
     age: 32,
-    age_category: 15,
     job: "Astrophysicist",
-    job_category: 4,
     region: "Northeast",
     family: "Married",
-    family_category: 10,
     personality: 7,
     votesAgainst: 0,
     stamina: 5,
@@ -76,12 +61,9 @@ const playerData = [
     },
     {name: "Clementine",
     age: 18,
-    age_category: 0,
     job: "Life Coach",
-    job_category: 5,
     region: "Northwest",
     family: "Single",
-    family_category: 0,
     personality: 17,
     votesAgainst: 0,
     stamina: 12,
@@ -91,12 +73,9 @@ const playerData = [
     },
     {name: "Candice",
     age: 27,
-    age_category: 10,
     job: "Stock Broker",
-    job_category: 5,
     region: "Northeast",
     family: "Single",
-    family_category: 0,
     personality: 3,
     votesAgainst: 0,
     stamina: 10,
@@ -107,8 +86,8 @@ const playerData = [
     {name: "Craig",
     age: 22,
     age_category: 5,
-    job: "Freelancer",
-    job_category: 5,
+    job: "Server",
+    job_category: 0,
     region: "Southwest",
     family: "Single",
     family_category: 0,
@@ -121,8 +100,68 @@ const playerData = [
     }
 ]
 
-function baseLoyalty() {
+function startingStats() {
+    
+    
+    
     playerData.forEach(player=>{
+        //set categories
+        //Age
+        switch (true) {
+            case player.age<20:
+                player.age_category = 0
+                break
+            case player.age<25:
+                player.age_category = 5
+                break
+            case player.age<30:
+                player.age_category = 10
+                break
+            case player.age<40:
+                player.age_category = 15
+                break
+            default:
+                player.age_category = 20
+        }
+        //Family
+        switch (player.family) {
+            case "Single":
+                player.family_category = 0
+                break
+            case "Married":
+                player.family_category = 10
+                break
+            case "Has Kids":
+                player.family_category = 20
+                break
+            default:
+                console.error(player.name + "'s family value ("+ player.family +") is invalid")
+        }
+        //Job
+        switch (player.job) {
+            case ("Unemployed"):
+            case ("Server"):
+                player.job_category = 0
+                break
+            case ("Powerplant Manager"):
+                player.job_category = 5
+                break
+            case ("Firefighter"):
+                player.job_category = 10
+                break
+            case ("Therapist"):
+            case ("Astrophysicist"):
+                player.job_category = 15
+                break
+            case ("Life Coach"):
+            case ("Stock Broker"):
+                player.job_category = 20
+                break
+            default:
+                console.error(player.name + "'s job value ("+ player.job +") is invalid")
+        }
+
+        //starting loyalties based on similarity
         const loyaltyRatings = {}
         playerData.forEach(rival=>{
             const region = 20*(player.region===rival.region)
@@ -137,7 +176,7 @@ function baseLoyalty() {
     })
 }
 
-baseLoyalty()
+startingStats()
 
 
 export default playerData
