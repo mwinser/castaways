@@ -124,6 +124,15 @@ function ContextProvider ({children}) {
         console.log(voteLog)
         return voteLog
     }
+    function immunityChallenge(participants){
+        // random type of challenge mental, physical, social
+        //calculate winner
+        const winnerName = participants.reduce((best, participant)=>participant["physical"]>best["physical"]? participant : best).name
+        console.log(winnerName + " has won immunity in a physical challenge!")
+        //apply idol
+        setPlayerIdol(winnerName, true)
+
+    }
     function randomPlayers(number){
         const output = []
         var playervoteeNames = playerState.map(player=>player.name)
@@ -168,6 +177,7 @@ function ContextProvider ({children}) {
                 setPlayerIdol,
                 removePlayer,
                 changeLoyalty,
+                immunityChallenge,
                 randomSocialEvent
             }}
         >

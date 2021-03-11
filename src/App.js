@@ -5,7 +5,7 @@ import { Context } from './Context';
 
 
 function App() {
-  const {playerState, juryPlayers, voteOff, setPlayerIdol, removePlayer, randomSocialEvent} = useContext(Context)
+  const {playerState, juryPlayers, voteOff, setPlayerIdol, removePlayer, randomSocialEvent, immunityChallenge} = useContext(Context)
 
   function handleVote(){
     const voteLog = voteOff(playerState, playerState)
@@ -53,7 +53,7 @@ function App() {
           <button onClick={()=>juryVote()}>Jury Vote</button>
         }
         <button onClick={()=>randomSocialEvent()}>Random</button>
-        <button onClick={()=>setPlayerIdol("Clementine", true)}>Give Clementine Idol</button>
+        <button onClick={()=>immunityChallenge(playerState)}>Trigger Immunity Challenge</button>
       
       
       </div>

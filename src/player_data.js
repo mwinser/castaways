@@ -8,7 +8,10 @@ const playerData = [
     family: "Single",
     family_category: 0,
     personality:0,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 5,
+    mental: 10,
+    social: 15
     },
     {name: "Barry",
     age: 30,
@@ -19,7 +22,10 @@ const playerData = [
     family: "Married",
     family_category: 10,
     personality: 6,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 18,
+    mental: 10,
+    social: 11
     },
     {name: "Dan",
     age: 38,
@@ -30,7 +36,10 @@ const playerData = [
     family: "Has Kids",
     family_category: 10,
     personality: 20,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 10,
+    mental: 16,
+    social: 12
     },
     {name: "Mary",
     age: 40,
@@ -41,7 +50,10 @@ const playerData = [
     family: "Married",
     family_category: 10,
     personality: 10,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 8,
+    mental: 15,
+    social: 18
     },
     {name: "Jude",
     age: 32,
@@ -52,7 +64,10 @@ const playerData = [
     family: "Married",
     family_category: 10,
     personality: 7,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 9,
+    mental: 20,
+    social: 8
     },
     {name: "Clementine",
     age: 18,
@@ -63,7 +78,10 @@ const playerData = [
     family: "Single",
     family_category: 0,
     personality: 17,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 13,
+    mental: 9,
+    social: 14
     },
     {name: "Candice",
     age: 27,
@@ -74,7 +92,10 @@ const playerData = [
     family: "Single",
     family_category: 0,
     personality: 3,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 15,
+    mental: 16,
+    social: 12
     },
     {name: "Craig",
     age: 22,
@@ -85,7 +106,10 @@ const playerData = [
     family: "Single",
     family_category: 0,
     personality: 8,
-    votesAgainst: 0
+    votesAgainst: 0,
+    physical: 16,
+    mental: 13,
+    social: 11
     }
 ]
 
