@@ -48,12 +48,15 @@ function App() {
       </div>
       <div className="footer">
         {playerState.length>3 ?
-          <button onClick={()=>handleVote()}>VoteOff</button>
+            <>
+            <button onClick={()=>handleVote()}>VoteOff</button>
+            <button onClick={()=>randomSocialEvent()}>Random Event</button>
+            <button onClick={()=>immunityChallenge(playerState)}>Trigger Immunity Challenge</button>
+            </>
           :
-          <button onClick={()=>juryVote()}>Jury Vote</button>
+            <button onClick={()=>juryVote()}>Jury Vote</button>
         }
-        <button onClick={()=>randomSocialEvent()}>Random</button>
-        <button onClick={()=>immunityChallenge(playerState)}>Trigger Immunity Challenge</button>
+        
       
       
       </div>

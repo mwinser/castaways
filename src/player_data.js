@@ -9,9 +9,10 @@ const playerData = [
     family_category: 0,
     personality:0,
     votesAgainst: 0,
-    physical: 5,
-    mental: 10,
-    social: 15
+    stamina: 5,
+    willpower: 10,
+    dexterity: 12,
+    intelligence: 15 
     },
     {name: "Barry",
     age: 30,
@@ -23,9 +24,10 @@ const playerData = [
     family_category: 10,
     personality: 6,
     votesAgainst: 0,
-    physical: 18,
-    mental: 10,
-    social: 11
+    stamina: 16,
+    willpower: 12,
+    dexterity: 10,
+    intelligence: 9 
     },
     {name: "Dan",
     age: 38,
@@ -37,9 +39,10 @@ const playerData = [
     family_category: 10,
     personality: 20,
     votesAgainst: 0,
-    physical: 10,
-    mental: 16,
-    social: 12
+    stamina: 7,
+    willpower: 15,
+    dexterity: 10,
+    intelligence: 16 
     },
     {name: "Mary",
     age: 40,
@@ -51,9 +54,10 @@ const playerData = [
     family_category: 10,
     personality: 10,
     votesAgainst: 0,
-    physical: 8,
-    mental: 15,
-    social: 18
+    stamina: 5,
+    willpower: 20,
+    dexterity: 6,
+    intelligence: 15 
     },
     {name: "Jude",
     age: 32,
@@ -65,9 +69,10 @@ const playerData = [
     family_category: 10,
     personality: 7,
     votesAgainst: 0,
-    physical: 9,
-    mental: 20,
-    social: 8
+    stamina: 5,
+    willpower: 5,
+    dexterity: 5,
+    intelligence: 20 
     },
     {name: "Clementine",
     age: 18,
@@ -79,9 +84,10 @@ const playerData = [
     family_category: 0,
     personality: 17,
     votesAgainst: 0,
-    physical: 13,
-    mental: 9,
-    social: 14
+    stamina: 12,
+    willpower: 14,
+    dexterity: 9,
+    intelligence: 12 
     },
     {name: "Candice",
     age: 27,
@@ -93,9 +99,10 @@ const playerData = [
     family_category: 0,
     personality: 3,
     votesAgainst: 0,
-    physical: 15,
-    mental: 16,
-    social: 12
+    stamina: 10,
+    willpower: 16,
+    dexterity: 9,
+    intelligence: 15 
     },
     {name: "Craig",
     age: 22,
@@ -107,9 +114,10 @@ const playerData = [
     family_category: 0,
     personality: 8,
     votesAgainst: 0,
-    physical: 16,
-    mental: 13,
-    social: 11
+    stamina: 13,
+    willpower: 11,
+    dexterity: 6,
+    intelligence: 15 
     }
 ]
 
