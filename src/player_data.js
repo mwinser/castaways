@@ -1,107 +1,11 @@
-const playerData = [
-    {name: "Sammy", 
-    age: 28,
-    job: "Unemployed",
-    region: "South",
-    family: "Single",
-    personality:0,
-    votesAgainst: 0,
-    stamina: 5,
-    willpower: 10,
-    dexterity: 12,
-    intelligence: 15 
-    },
-    {name: "Barry",
-    age: 30,
-    job: "Firefighter",
-    region: "Midwest",
-    family: "Married",
-    personality: 6,
-    votesAgainst: 0,
-    stamina: 16,
-    willpower: 12,
-    dexterity: 10,
-    intelligence: 9 
-    },
-    {name: "Dan",
-    age: 38,
-    job: "Powerplant Manager",
-    region: "Southwest",
-    family: "Has Kids",
-    personality: 20,
-    votesAgainst: 0,
-    stamina: 7,
-    willpower: 15,
-    dexterity: 10,
-    intelligence: 16 
-    },
-    {name: "Mary",
-    age: 40,
-    job: "Therapist",
-    region: "Midwest",
-    family: "Married",
-    personality: 10,
-    votesAgainst: 0,
-    stamina: 5,
-    willpower: 20,
-    dexterity: 6,
-    intelligence: 15 
-    },
-    {name: "Jude",
-    age: 32,
-    job: "Astrophysicist",
-    region: "Northeast",
-    family: "Married",
-    personality: 7,
-    votesAgainst: 0,
-    stamina: 5,
-    willpower: 5,
-    dexterity: 5,
-    intelligence: 20 
-    },
-    {name: "Clementine",
-    age: 18,
-    job: "Life Coach",
-    region: "Northwest",
-    family: "Single",
-    personality: 17,
-    votesAgainst: 0,
-    stamina: 12,
-    willpower: 14,
-    dexterity: 9,
-    intelligence: 12 
-    },
-    {name: "Candice",
-    age: 27,
-    job: "Stock Broker",
-    region: "Northeast",
-    family: "Single",
-    personality: 3,
-    votesAgainst: 0,
-    stamina: 10,
-    willpower: 16,
-    dexterity: 9,
-    intelligence: 15 
-    },
-    {name: "Craig",
-    age: 22,
-    job: "Server",
-    region: "Southwest",
-    family: "Single",
-    personality: 8,
-    votesAgainst: 0,
-    stamina: 13,
-    willpower: 11,
-    dexterity: 6,
-    intelligence: 15 
-    }
-]
+const playerData = []
 
-function startingStats() {
+function startingStats(numPlayers) {
     var names = ["Sammy", "Barry", "Dan", "Candice", "Clementine", "Ziggy", "Adam", "Alex", "Ambrosia", "Tony", "Tina", "Jude", "DeShawn", "Mike", "Stevie", "Sam", "Elliot", "Rob", "Roberto", "Robbie", "Bobby", "Amy", "Beth", "Charlie", "Freya", "Dom", "Latoya"]
     const jobs = ["Unemployed", "Server","Student","Powerplant Manager", "Construction Worker","Truck Driver","Firefighter", "Cop","Soldier","Therapist", "Astrophysicist","Professor","Life Coach", "Stock Broker","Lawyer"]
     const regions = ["Northeast", "South", "Midwest", "Northwest", "Southwest"]
     const families = ["Single", "Married", "Has Kids"]
+    
     //function to make sure no names are chosen twice
     function pickName(){
         let number = ~~(Math.random()*names.length)
@@ -116,22 +20,24 @@ function startingStats() {
         jobs.splice(number, 1)
         return job
     }
-    //create random player
-    const rando = {
-        name: pickName(),
-        age: 18 + ~~(Math.random()*(45-18)),
-        job: pickJob(),
-        region: regions[~~(Math.random()*regions.length)],
-        family: families[~~(Math.random()*families.length)],
-        personality: ~~(Math.random()*20),
-        votesAgainst: 0,
-        stamina: ~~(Math.random()*20),
-        willpower: ~~(Math.random()*20),
-        dexterity: ~~(Math.random()*20),
-        intelligence: ~~(Math.random()*20),
-        }
-    console.log(rando)
-    playerData.push(rando)
+    for (let i=0;i<numPlayers;i++){
+        //create random player
+        const rando = {
+            name: pickName(),
+            age: 18 + ~~(Math.random()*(45-18)),
+            job: pickJob(),
+            region: regions[~~(Math.random()*regions.length)],
+            family: families[~~(Math.random()*families.length)],
+            personality: ~~(Math.random()*20),
+            votesAgainst: 0,
+            stamina: ~~(Math.random()*20),
+            willpower: ~~(Math.random()*20),
+            dexterity: ~~(Math.random()*20),
+            intelligence: ~~(Math.random()*20),
+            }
+        playerData.push(rando)
+    }
+
 
     playerData.forEach(player=>{
         //set categories
@@ -207,7 +113,7 @@ function startingLoyalties() {
 }
 
 
-startingStats()
+startingStats(8)
 startingLoyalties()
 
 export default playerData
