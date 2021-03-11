@@ -99,7 +99,7 @@ const playerData = [
 
 function startingStats() {
     var names = ["Sammy", "Barry", "Dan", "Candice", "Clementine", "Ziggy", "Adam", "Alex", "Ambrosia", "Tony", "Tina", "Jude", "DeShawn", "Mike", "Stevie", "Sam", "Elliot", "Rob", "Roberto", "Robbie", "Bobby", "Amy", "Beth", "Charlie", "Freya", "Dom", "Latoya"]
-    const jobs = ["Student", "Cop", "Lawyer"]
+    const jobs = ["Unemployed", "Server","Student","Powerplant Manager", "Construction Worker","Truck Driver","Firefighter", "Cop","Soldier","Therapist", "Astrophysicist","Professor","Life Coach", "Stock Broker","Lawyer"]
     const regions = ["Northeast", "South", "Midwest", "Northwest", "Southwest"]
     const families = ["Single", "Married", "Has Kids"]
     //function to make sure no names are chosen twice
@@ -107,14 +107,20 @@ function startingStats() {
         let number = ~~(Math.random()*names.length)
         let name = names[number]
         names.splice(number, 1)
-        console.log(names)
         return name
+    }
+    //function to make sure no jobs are chosen twice
+    function pickJob(){
+        let number = ~~(Math.random()*jobs.length)
+        let job = jobs[number]
+        jobs.splice(number, 1)
+        return job
     }
     //create random player
     const rando = {
         name: pickName(),
         age: 18 + ~~(Math.random()*(45-18)),
-        job: jobs[~~(Math.random()*jobs.length)],
+        job: pickJob(),
         region: regions[~~(Math.random()*regions.length)],
         family: families[~~(Math.random()*families.length)],
         personality: ~~(Math.random()*20),
