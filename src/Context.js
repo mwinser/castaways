@@ -13,8 +13,20 @@ function ContextProvider ({children}) {
         switch (action.type) {
             case 'REMOVE_PLAYER':
                 return [...playerState.filter((player)=>player.name!==action.payload)];
+            case 'REMOVE_ALL_IDOLS':
+                return playerState.map(player=>({...player, hasIdol: false}))
+            case 'SET_PLAYER_IDOL':
+                var player = playerState.find((player)=>player.name===action.payload.playerName)
+                
+                return [
+                    ...playerState.filter((player)=>player.name!==action.payload.playerName), 
+                    {
+                    ...player,
+                    hasIdol: action.payload.value
+                    }
+                    ]
             case 'CHANGE_LOYALTY':
-                const player = playerState.find((player)=>player.name===action.payload.playerName)
+                var player = playerState.find((player)=>player.name===action.payload.playerName)
                 
                 return [
                     ...playerState.filter((player)=>player.name!==action.payload.playerName), 
@@ -23,7 +35,7 @@ function ContextProvider ({children}) {
                     loyalty: 
                         {
                         ...player.loyalty, 
-                        [action.payload.rivalName]: Math.max(0, Math.min(100, player.loyalty[action.payload.rivalName]+action.payload.amount))
+                        [action.payload.voteeName]: Math.max(0, Math.min(100, player.loyalty[action.payload.voteeName]+action.payload.amount))
                         }
                     }
                     ]
@@ -38,17 +50,26 @@ function ContextProvider ({children}) {
             payload: name
         })
     }
-
-    function changeLoyalty(playerName, rivalName, amount){
+    function setPlayerIdol(playerName, value){
+        dispatch({
+            type: "SET_PLAYER_IDOL",
+            payload: {playerName, value}
+        })
+    }
+    function removeAllIdols(){
         
         dispatch({
+            type: "REMOVE_ALL_IDOLS"
+        })
+    }
+    function changeLoyalty(playerName, voteeName, amount){
+        dispatch({
             type: "CHANGE_LOYALTY",
-            payload: {playerName, rivalName, amount}
+            payload: {playerName, voteeName, amount}
         })
         
         
     }
-
     function voteOff(voters, votees) {
         var voteLog ={
             voteAgainstHistory: {},
@@ -59,27 +80,30 @@ function ContextProvider ({children}) {
             votesFor: {},
             winnerName: "",
             winnerVotesFor: 0,
-            wasTie: false
+            idolWasUsed: false
         }
 
-        //get names
-        const names = votees.map(rival=>{
-            voteLog.votesAgainst[rival.name] = 0
-            voteLog.votesFor[rival.name] = 0
-            return rival.name
+        //get voteeNames
+        const voteeNames = votees.filter(votee=>!votee.hasIdol).map(votee=>{
+            voteLog.votesAgainst[votee.name] = 0
+            voteLog.votesFor[votee.name] = 0
+            return votee.name
         })
+        //check that idol was used
+        if (voteeNames.length!==votees.length){
+            voteLog.idolWasUsed = true
+        }
 
         //get individual votes based on loyalty
-        voters.forEach((player)=>{
+        voters.forEach((voter)=>{
             //voteAgainstHistory
-
-            voteLog.voteAgainstHistory[player.name] = names.reduce((min, name)=>
-                player.loyalty[name]<player.loyalty[min]? name : min
+            voteLog.voteAgainstHistory[voter.name] = voteeNames.reduce((min, name)=>
+                voter.loyalty[name]<voter.loyalty[min]? name : min
                 )
-            voteLog.voteForHistory[player.name] = names.reduce((max, name)=>
-            player.loyalty[name]>player.loyalty[max]? name : max
+            //voteForHistory
+            voteLog.voteForHistory[voter.name] = voteeNames.reduce((max, name)=>
+            voter.loyalty[name]>voter.loyalty[max]? name : max
             )
-            
         })
 
         //votesAgainst
@@ -88,26 +112,26 @@ function ContextProvider ({children}) {
         voters.forEach(voter=> voteLog.votesFor[voteLog.voteForHistory[voter.name]]+=1)
 
         //loserName and loserVotesAgainst
-        voteLog.loserVotesAgainst = names.reduce((max, name)=> voteLog.votesAgainst[name]>max ? voteLog.votesAgainst[name] : max, 0 )
-        voteLog.loserName = names.reduce((max, name)=> voteLog.votesAgainst[name]>voteLog.votesAgainst[max] ? name : max )
+        voteLog.loserVotesAgainst = voteeNames.reduce((max, name)=> voteLog.votesAgainst[name]>max ? voteLog.votesAgainst[name] : max, 0 )
+        voteLog.loserName = voteeNames.reduce((max, name)=> voteLog.votesAgainst[name]>voteLog.votesAgainst[max] ? name : max )
         
         //winnerName and winnerVotesFor
-        voteLog.winnerVotesFor = names.reduce((max, name)=> voteLog.votesFor[name]>max ? voteLog.votesFor[name] : max, 0 )
-        voteLog.winnerName = names.reduce((max, name)=> voteLog.votesFor[name]>voteLog.votesFor[max] ? name : max )
+        voteLog.winnerVotesFor = voteeNames.reduce((max, name)=> voteLog.votesFor[name]>max ? voteLog.votesFor[name] : max, 0 )
+        voteLog.winnerName = voteeNames.reduce((max, name)=> voteLog.votesFor[name]>voteLog.votesFor[max] ? name : max )
         
-        //wasTie
-
+        //idols automatically used up each vote
+        removeAllIdols()
+        console.log(voteLog)
         return voteLog
     }
-    
     function randomPlayers(number){
         const output = []
-        var playerNames = playerState.map(player=>player.name)
+        var playervoteeNames = playerState.map(player=>player.name)
         for (var i=0;i<number;i++) {
-            const selected = ~~(Math.random()*playerNames.length)
-            const selectedPlayer = playerNames[selected]
+            const selected = ~~(Math.random()*playervoteeNames.length)
+            const selectedPlayer = playervoteeNames[selected]
             output.push(selectedPlayer)
-            playerNames = playerNames.filter((name)=>name!==selectedPlayer)
+            playervoteeNames = playervoteeNames.filter((name)=>name!==selectedPlayer)
         }
         return output
     }
@@ -141,6 +165,7 @@ function ContextProvider ({children}) {
                 playerState,
                 juryPlayers,
                 voteOff,
+                setPlayerIdol,
                 removePlayer,
                 changeLoyalty,
                 randomSocialEvent
