@@ -21,7 +21,7 @@ function App() {
     console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
   }
 
-  function comparePlayerNames(a,b){
+  function compareByName(a,b){
     const playerA = a.name.toUpperCase();
     const playerB = b.name.toUpperCase();
   
@@ -41,7 +41,7 @@ function App() {
         Castaways
       </div>
       <div className="content">
-        {playerState.sort(comparePlayerNames).map((player, index)=>(
+        {playerState.sort(compareByName).map((player, index)=>(
             <PlayerCard key={index} player={player}/>
         ))
         }
@@ -57,7 +57,7 @@ function App() {
             <button onClick={()=>juryVote()}>Jury Vote</button>
         }
         <div></div>
-        <button onClick={()=>console.table(juryPlayers.loyalty)}>Jury Players</button>
+        <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
         <button onClick={()=>console.log(playerState)}>Remaining Players</button>
         
       
