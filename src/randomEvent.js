@@ -2,18 +2,26 @@
 const onePlayerEvents = [
     {
         string: " said something funny.",
-        change: 10
+        change: 5
     },
     {
         string: " helped out around camp.",
+        change: 10
+    },
+    {
+        string: " caught fish for dinner.",
         change: 20
     },
     {
-        string: " won an advantage for the whole tribe.",
+        string: " won a feast for the whole tribe.",
         change: 30
     },
     {
-        string: " was in a bad mood.",
+        string: " burned the rice.",
+        change: -5
+    },
+    {
+        string: " has been looking for idols.",
         change: -10
     },
     {
@@ -21,7 +29,7 @@ const onePlayerEvents = [
         change: -20
     },
     {
-        string: " lost an advantage for the whole tribe.",
+        string: " lost a feast challenge for the whole tribe.",
         change: -30
     }
 ]
@@ -29,10 +37,14 @@ const onePlayerEvents = [
 const twoPlayerEvents = [
     {
         string: " found they had something in common.",
-        change: 10
+        change: 5
     },
     {
         string: " had a deep conversation.",
+        change: 10
+    },
+    {
+        string: " became friends.",
         change: 20
     },
     {
@@ -41,10 +53,14 @@ const twoPlayerEvents = [
     },
     {
         string: " had a minor disagreement.",
-        change: -10
+        change: -5
     },
     {
         string: " had a heated argument.",
+        change: -10
+    },
+    {
+        string: " had a major social fight.",
         change: -20
     },
     {

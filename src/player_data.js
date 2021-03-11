@@ -62,7 +62,7 @@ const playerData = [
     region: "Northwest",
     family: "Single",
     family_category: 0,
-    personality: 6,
+    personality: 17,
     votesAgainst: 0
     },
     {name: "Candice",
@@ -73,7 +73,7 @@ const playerData = [
     region: "Northeast",
     family: "Single",
     family_category: 0,
-    personality: 6,
+    personality: 3,
     votesAgainst: 0
     },
     {name: "Craig",
@@ -84,7 +84,7 @@ const playerData = [
     region: "Southwest",
     family: "Single",
     family_category: 0,
-    personality: 6,
+    personality: 8,
     votesAgainst: 0
     }
 ]

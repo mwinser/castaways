@@ -5,16 +5,20 @@ import { Context } from './Context';
 
 
 function App() {
-  const {playerState, voteOff, removePlayer, randomSocialEvent} = useContext(Context)
+  const {playerState, juryPlayers, voteOff, removePlayer, randomSocialEvent} = useContext(Context)
 
   function handleVote(){
-    const voteLog = voteOff()
+    const voteLog = voteOff(playerState, playerState)
     console.log("Vote-off called!")
-    Object.entries(voteLog.voteHistory).forEach(vote=>{
+    Object.entries(voteLog.voteAgainstHistory).forEach(vote=>{
       console.log(vote[0] + " voted for " + vote[1])
     })
     console.log(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
     removePlayer(voteLog.loserName)
+  }
+  function juryVote(){
+    const voteLog = voteOff(juryPlayers.slice(1), playerState)
+    console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
   }
 
   function comparePlayerNames(a,b){
@@ -43,8 +47,14 @@ function App() {
         }
       </div>
       <div className="footer">
-        <button onClick={()=>handleVote()}>VoteOff</button>
-      <button onClick={()=>randomSocialEvent()}>Random</button>
+        {playerState.length>3 ?
+          <button onClick={()=>handleVote()}>VoteOff</button>
+          :
+          <button onClick={()=>juryVote()}>Jury Vote</button>
+        }
+        <button onClick={()=>randomSocialEvent()}>Random</button>
+      
+      
       </div>
       
     </div>

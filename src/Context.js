@@ -1,15 +1,18 @@
-import React, {useReducer} from 'react'
+import React, {useReducer, useState} from 'react'
 import playerData from './player_data'
 import {onePlayerEvents, twoPlayerEvents} from './randomEvent'
 
 const Context = React.createContext(null)
 
 function ContextProvider ({children}) {
+    const [juryPlayers, setJuryPlayers] = useState([])
     const [playerState, dispatch] = useReducer(playersReducer, playerData)
+    
     
     function playersReducer(playerState, action){
         switch (action.type) {
             case 'REMOVE_PLAYER':
+                setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===action.payload)])
                 return [...playerState.filter((player)=>player.name!==action.payload)];
             case 'CHANGE_LOYALTY':
                 const player = playerState.find((player)=>player.name===action.payload.playerName)
@@ -46,35 +49,51 @@ function ContextProvider ({children}) {
         
     }
 
-    function voteOff() {
+    function voteOff(voters, votees) {
         var voteLog ={
-            voteHistory: {},
+            voteAgainstHistory: {},
+            voteForHistory: {},
             votesAgainst: {},
             loserName: "",
             loserVotesAgainst: 0,
+            votesFor: {},
+            winnerName: "",
+            winnerVotesFor: 0,
             wasTie: false
         }
 
         //get names
-        const names = playerState.map(rival=>{
+        const names = votees.map(rival=>{
             voteLog.votesAgainst[rival.name] = 0
+            voteLog.votesFor[rival.name] = 0
             return rival.name
         })
 
-        //get individual votes base on loyalty
-        playerState.forEach((player)=>{
-            //voteHistory
-            voteLog.voteHistory[player.name] = names.reduce((min, name)=>
+        //get individual votes based on loyalty
+        voters.forEach((player)=>{
+            //voteAgainstHistory
+
+            voteLog.voteAgainstHistory[player.name] = names.reduce((min, name)=>
                 player.loyalty[name]<player.loyalty[min]? name : min
                 )
+            voteLog.voteForHistory[player.name] = names.reduce((max, name)=>
+            player.loyalty[name]>player.loyalty[max]? name : max
+            )
+            
         })
 
         //votesAgainst
-        names.forEach(name=> voteLog.votesAgainst[voteLog.voteHistory[name]]+=1)
+        voters.forEach(voter=> voteLog.votesAgainst[voteLog.voteAgainstHistory[voter.name]]+=1)
+        //votesFor
+        voters.forEach(voter=> voteLog.votesFor[voteLog.voteForHistory[voter.name]]+=1)
 
         //loserName and loserVotesAgainst
         voteLog.loserVotesAgainst = names.reduce((max, name)=> voteLog.votesAgainst[name]>max ? voteLog.votesAgainst[name] : max, 0 )
         voteLog.loserName = names.reduce((max, name)=> voteLog.votesAgainst[name]>voteLog.votesAgainst[max] ? name : max )
+        
+        //winnerName and winnerVotesFor
+        voteLog.winnerVotesFor = names.reduce((max, name)=> voteLog.votesFor[name]>max ? voteLog.votesFor[name] : max, 0 )
+        voteLog.winnerName = names.reduce((max, name)=> voteLog.votesFor[name]>voteLog.votesFor[max] ? name : max )
         
         //wasTie
 
@@ -119,6 +138,7 @@ function ContextProvider ({children}) {
         <Context.Provider 
             value={{
                 playerState,
+                juryPlayers,
                 voteOff,
                 removePlayer,
                 changeLoyalty,
