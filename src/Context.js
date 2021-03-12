@@ -29,7 +29,7 @@ function ContextProvider ({children}) {
                     }
                     ]
             case 'CHANGE_LOYALTY':
-                var player = playerState.find((player)=>player.name===action.payload.playerName)
+                player = playerState.find((player)=>player.name===action.payload.playerName)
                 
                 return [
                     ...playerState.filter((player)=>player.name!==action.payload.playerName), 
@@ -172,6 +172,7 @@ function ContextProvider ({children}) {
                 everyoneElse.map(playerName=>changeLoyalty(playerName,playersInvolved[0], change))
                 return null
             case 2:
+                // eslint-disable-next-line
                 var {string, change} = twoPlayerEvents[~~(Math.random()*twoPlayerEvents.length)]
 
                 console.log(playersInvolved[0] + " and " + playersInvolved[1] + string + ' Loyalty changed by ' + change)

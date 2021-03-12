@@ -31,15 +31,18 @@ html, body {
   background: white;
   width: 60%;
   max-width: 600px;
-  height: 200px;
   border: 2px solid gray;
   border-radius: 1rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
 }
+.choicebox .title {
+  font-size: large;
+}
 .choicebox .dialog {
   flex-grow: 1;
+  margin: 1.5em 0;
 }
 .choicebox .choices {
   display: flex;
@@ -50,6 +53,7 @@ html, body {
   background:rgb(143, 210, 255);
   padding: .8rem;
   font-weight: bold;
+  border-radius: 1em;
 }
 .header {
   position: absolute;

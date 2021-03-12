@@ -1,8 +1,4 @@
-import React, { useContext } from 'react'
-import {Context} from './Context'
-
 function ChoiceBox(props){
-    const {toggleDialog} = useContext(Context)
     const {dialog} = props
     return (
     <div className="choicebox">

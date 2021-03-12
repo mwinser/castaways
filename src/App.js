@@ -14,7 +14,6 @@ function App() {
     isDialogOpen,
     toggleDialog,
     voteOff, 
-    setPlayerIdol, 
     removePlayer, 
     randomSocialEvent, 
     immunityChallenge, 
