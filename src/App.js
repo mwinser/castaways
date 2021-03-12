@@ -3,6 +3,7 @@ import './App.css';
 import PlayerCard from './components/PlayerCard';
 import { Context } from './Context';
 import PhaseManager from './PhaseManager';
+import ChoiceBox from './ChoiceBox';
 
 
 
@@ -92,7 +93,7 @@ function App() {
       
       
       </div>
-      
+      <ChoiceBox title="Hello" content="This is a choice box" choices={["ChoiceA", "ChoiceB"]}/>
     </div>
   )
 }
