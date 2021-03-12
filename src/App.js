@@ -20,30 +20,53 @@ function App() {
     immunityChallenge, 
     resetPlayers} = useContext(Context)
   const {phase, advancePhase} = PhaseManager()
- 
+  const [dialogData, setDialogData] = useState()
  
   function handlePhaseEvent (){
-    toggleDialog()
-    // switch(phase){
-    //   case 'NEW GAME':
-    //     resetPlayers(8)
-    //     break
-    //   case 'MORNING MINGLE':
-    //     randomSocialEvent()
-    //     break
-    //   case 'AFTERNOON CHALLENGE':
-    //     immunityChallenge(playerState)
-    //     break
-    //   case 'EVENING EXILE':
-    //     handleVote()
-    //     break
-    //   case 'JURY VOTE':
-    //     juryVote()
-    //     break
-    //   default:
-    //     break
-    // }
-    //advancePhase()
+
+    switch(phase){
+      case 'NEW GAME':
+        resetPlayers(8)
+        break
+      case 'MORNING MINGLE':
+        setDialogData({
+          title:"Morning Mingle" ,
+          content:"Camp life requires near constant work and everyone should pull their own weight. Will you leave camp to gather resources or stay in camp to help out there?" ,
+          choice1:{name: "Leave camp", effect: ()=>{randomSocialEvent(); advancePhase(); toggleDialog()}},
+          choice2:{name: "Stay at camp", effect: ()=>{randomSocialEvent(); advancePhase(); toggleDialog()}}
+        })
+        toggleDialog()
+        break
+      case 'AFTERNOON CHALLENGE':
+        setDialogData({
+          title:"Afternoon Immunity Challenge" ,
+          content:"Everyday is a challenge, literally. Today will you be extra competitive or take it easy?" ,
+          choice1:{name: "CHALLENGE BEAST", effect: ()=>{immunityChallenge(playerState); advancePhase(); toggleDialog()}},
+          choice2:{name: "Lay low", effect: ()=>{immunityChallenge(playerState); advancePhase(); toggleDialog()}}
+        })
+        toggleDialog()
+        break
+      case 'EVENING EXILE':
+        setDialogData({
+          title:"Evening Exile" ,
+          content:"Every evening someone goes home. Who will you vote for?" ,
+          choice1:{name: "Physical Threat", effect: ()=>{handleVote(); advancePhase(); toggleDialog()}},
+          choice2:{name: "Social Threat", effect: ()=>{handleVote(); advancePhase(); toggleDialog()}}
+        })
+        toggleDialog()
+        break
+      case 'JURY VOTE':
+        setDialogData({
+          title:"And the winner is..." ,
+          content:"The Jury will vote for the winner." ,
+          choice1:{name: "See the results", effect: ()=>{juryVote(); advancePhase(); toggleDialog()}}
+        })
+        toggleDialog()
+        break
+      default:
+        break
+    }
+    advancePhase()
   }
 
   function handleVote(){
@@ -96,12 +119,9 @@ function App() {
       
       
       </div>
-      {isDialogOpen && 
+      {isDialogOpen && dialogData &&
         <ChoiceBox 
-          title="Hello" 
-          content="This is a choice box" 
-          choice1={{name: "Reset", effect: ()=>resetPlayers(5)}} 
-          choice2={{name: "Vote Off", effect: ()=>handleVote()}}
+          dialog = {dialogData}
         />
       }
     </div>
