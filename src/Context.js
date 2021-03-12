@@ -6,6 +6,7 @@ const Context = React.createContext(null)
 
 function ContextProvider ({children}) {
     const playerData = NewGame(8)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [juryPlayers, setJuryPlayers] = useState([])
     const [playerState, dispatch] = useReducer(playersReducer, playerData || [])
     
@@ -79,6 +80,11 @@ function ContextProvider ({children}) {
         
         
     }
+
+    function toggleDialog(){
+        setIsDialogOpen(prevState=>!prevState)
+    }
+
     function voteOff(voters, votees) {
         var voteLog ={
             voteAgainstHistory: {},
@@ -183,6 +189,8 @@ function ContextProvider ({children}) {
             value={{
                 playerState,
                 juryPlayers,
+                isDialogOpen,
+                toggleDialog,
                 voteOff,
                 setPlayerIdol,
                 removePlayer,

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import {Context} from './Context'
 
 function ChoiceBox(props){
-    const {title, content, choices} = props
+    const {toggleDialog} = useContext(Context)
+    const {title, content, choice1, choice2} = props
     return (
     <div className="choicebox">
         <div className="box">
@@ -12,11 +14,14 @@ function ChoiceBox(props){
                 {content}
             </div>
             <div className="choices">
-                <div className="btn" id="choice1">
-                    {choices[0]}
+                <div className="btn" id="choice1" onClick={choice1.effect}>
+                    {choice1.name}
                 </div>
-                <div className="btn" id="choice2">
-                    {choices[1]}
+                <div className="btn" id="choice2" onClick={choice2.effect}>
+                    {choice2.name}
+                </div>
+                <div className="btn" onClick={()=>toggleDialog()}>
+                    Cancel
                 </div>
             </div>
         </div>

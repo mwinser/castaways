@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import './App.css';
 import PlayerCard from './components/PlayerCard';
 import { Context } from './Context';
@@ -11,6 +11,8 @@ function App() {
   const {
     playerState, 
     juryPlayers, 
+    isDialogOpen,
+    toggleDialog,
     voteOff, 
     setPlayerIdol, 
     removePlayer, 
@@ -18,29 +20,30 @@ function App() {
     immunityChallenge, 
     resetPlayers} = useContext(Context)
   const {phase, advancePhase} = PhaseManager()
-
+ 
  
   function handlePhaseEvent (){
-    switch(phase){
-      case 'NEW GAME':
-        resetPlayers(8)
-        break
-      case 'MORNING MINGLE':
-        randomSocialEvent()
-        break
-      case 'AFTERNOON CHALLENGE':
-        immunityChallenge(playerState)
-        break
-      case 'EVENING EXILE':
-        handleVote()
-        break
-      case 'JURY VOTE':
-        juryVote()
-        break
-      default:
-        break
-    }
-    advancePhase()
+    toggleDialog()
+    // switch(phase){
+    //   case 'NEW GAME':
+    //     resetPlayers(8)
+    //     break
+    //   case 'MORNING MINGLE':
+    //     randomSocialEvent()
+    //     break
+    //   case 'AFTERNOON CHALLENGE':
+    //     immunityChallenge(playerState)
+    //     break
+    //   case 'EVENING EXILE':
+    //     handleVote()
+    //     break
+    //   case 'JURY VOTE':
+    //     juryVote()
+    //     break
+    //   default:
+    //     break
+    // }
+    //advancePhase()
   }
 
   function handleVote(){
@@ -93,7 +96,14 @@ function App() {
       
       
       </div>
-      <ChoiceBox title="Hello" content="This is a choice box" choices={["ChoiceA", "ChoiceB"]}/>
+      {isDialogOpen && 
+        <ChoiceBox 
+          title="Hello" 
+          content="This is a choice box" 
+          choice1={{name: "Reset", effect: ()=>resetPlayers(5)}} 
+          choice2={{name: "Vote Off", effect: ()=>handleVote()}}
+        />
+      }
     </div>
   )
 }
