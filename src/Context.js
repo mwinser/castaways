@@ -1,16 +1,18 @@
 import React, {useReducer, useState} from 'react'
-import playerData from './player_data'
+import NewGame from './NewGame'
 import {onePlayerEvents, twoPlayerEvents} from './randomEvent'
 
 const Context = React.createContext(null)
 
 function ContextProvider ({children}) {
+    const playerData = NewGame(8)
     const [juryPlayers, setJuryPlayers] = useState([])
-    const [playerState, dispatch] = useReducer(playersReducer, playerData)
-    
+    const [playerState, dispatch] = useReducer(playersReducer, playerData || [])
     
     function playersReducer(playerState, action){
         switch (action.type) {
+            case 'NEW_GAME':
+                return NewGame(action.payload)
             case 'REMOVE_PLAYER':
                 return [...playerState.filter((player)=>player.name!==action.payload)];
             case 'REMOVE_ALL_IDOLS':
@@ -42,6 +44,13 @@ function ContextProvider ({children}) {
             default: 
                 return playerState;
         }
+    }
+    function resetPlayers(numPlayers){
+        setJuryPlayers([])
+        dispatch({
+            type: "NEW_GAME",
+            payload: numPlayers
+        })
     }
     function removePlayer(name){
         setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===name)])
@@ -179,7 +188,8 @@ function ContextProvider ({children}) {
                 removePlayer,
                 changeLoyalty,
                 immunityChallenge,
-                randomSocialEvent
+                randomSocialEvent,
+                resetPlayers
             }}
         >
             {children}

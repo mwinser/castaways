@@ -2,10 +2,45 @@ import { useContext } from 'react';
 import './App.css';
 import PlayerCard from './components/PlayerCard';
 import { Context } from './Context';
+import PhaseManager from './PhaseManager';
+
 
 
 function App() {
-  const {playerState, juryPlayers, voteOff, setPlayerIdol, removePlayer, randomSocialEvent, immunityChallenge} = useContext(Context)
+  const {
+    playerState, 
+    juryPlayers, 
+    voteOff, 
+    setPlayerIdol, 
+    removePlayer, 
+    randomSocialEvent, 
+    immunityChallenge, 
+    resetPlayers} = useContext(Context)
+  const {phase, advancePhase} = PhaseManager()
+
+ 
+  function handlePhaseEvent (){
+    switch(phase){
+      case 'NEW GAME':
+        resetPlayers(8)
+        break
+      case 'MORNING MINGLE':
+        randomSocialEvent()
+        break
+      case 'AFTERNOON CHALLENGE':
+        immunityChallenge(playerState)
+        break
+      case 'EVENING EXILE':
+        handleVote()
+        break
+      case 'JURY VOTE':
+        juryVote()
+        break
+      default:
+        break
+    }
+    advancePhase()
+  }
 
   function handleVote(){
     const voteLog = voteOff(playerState, playerState)
@@ -38,7 +73,9 @@ function App() {
   return (
     <div className="fullscreen">
       <div className="header">
-        Castaways
+        <div>Castaways</div>
+        <div>{phase}</div>
+        
       </div>
       <div className="content">
         {playerState.sort(compareByName).map((player, index)=>(
@@ -47,18 +84,10 @@ function App() {
         }
       </div>
       <div className="footer">
-        {playerState.length>3 ?
-            <>
-            <button onClick={()=>handleVote()}>VoteOff</button>
-            <button onClick={()=>randomSocialEvent()}>Random Event</button>
-            <button onClick={()=>immunityChallenge(playerState)}>Trigger Immunity Challenge</button>
-            </>
-          :
-            <button onClick={()=>juryVote()}>Jury Vote</button>
-        }
-        <div></div>
+        
         <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
         <button onClick={()=>console.log(playerState)}>Remaining Players</button>
+        <button onClick={()=>handlePhaseEvent()}>Resolve {phase}</button>
         
       
       
