@@ -34,6 +34,7 @@ function ContextProvider ({children}) {
                     }
                     ]
             case 'CHANGE_LOYALTY':
+                console.log(action.payload)
                 player = playerState.find((player)=>player.name===action.payload.playerName)
                 
                 return [
@@ -169,18 +170,25 @@ function ContextProvider ({children}) {
         const event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
         if (event.players===1){
             console.log(event.string + " Group loyalty changed by " + event.change)
+            const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
+            everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
             return null
         }
-        console.log("You and " + randomPlayers(1) + event.string + ' Loyalty changed by ' + event.change)
-                
+        const otherPlayer = randomPlayers(1)[0]
+        console.log("You and " + otherPlayer + event.string + ' Loyalty changed by ' + event.change)
+        changeLoyalty(userPlayer, otherPlayer, event.change)
+        changeLoyalty(otherPlayer, userPlayer, event.change)
     }
     function leftCampEvent(){
         const event = leftCamp[~~(Math.random()*leftCamp.length)]
         if (event.players===1){
             console.log(event.string + " Group loyalty changed by " + event.change)
+            const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
+            everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
             return null
         }
         console.log(event.string)
+        setPlayerIdol(userPlayer, true)
     }
     function randomSocialEvent() {
         const numInvolved = ~~(Math.random()*2)+1
