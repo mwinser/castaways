@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react'
 import NewGame from './NewGame'
-import {onePlayerEvents, twoPlayerEvents} from './randomEvent'
+import {onePlayerEvents, twoPlayerEvents, stayedAtCamp, leftCamp} from './randomEvent'
 
 const Context = React.createContext(null)
 
@@ -160,6 +160,23 @@ function ContextProvider ({children}) {
         }
         return output
     }
+    function campEvent(){
+        const event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
+        if (event.players===1){
+            console.log(event.string + " Group loyalty changed by " + event.change)
+            return null
+        }
+        console.log("You and " + randomPlayers(1) + event.string + ' Loyalty changed by ' + event.change)
+                
+    }
+    function leftCampEvent(){
+        const event = leftCamp[~~(Math.random()*leftCamp.length)]
+        if (event.players===1){
+            console.log(event.string + " Group loyalty changed by " + event.change)
+            return null
+        }
+        console.log(event.string)
+    }
     function randomSocialEvent() {
         const numInvolved = ~~(Math.random()*2)+1
         const playersInvolved = randomPlayers(numInvolved)
@@ -198,6 +215,8 @@ function ContextProvider ({children}) {
                 changeLoyalty,
                 immunityChallenge,
                 randomSocialEvent,
+                campEvent,
+                leftCampEvent,
                 resetPlayers
             }}
         >

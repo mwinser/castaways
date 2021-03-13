@@ -15,7 +15,9 @@ function App() {
     toggleDialog,
     voteOff, 
     removePlayer, 
-    randomSocialEvent, 
+    randomSocialEvent,
+    campEvent,
+    leftCampEvent,
     immunityChallenge, 
     resetPlayers} = useContext(Context)
   const {phase, advancePhase} = PhaseManager()
@@ -31,8 +33,8 @@ function App() {
         setDialogData({
           title:"Morning Mingle" ,
           content:"Camp life requires near constant work and everyone should pull their own weight. Will you leave camp to gather resources or stay in camp to help out there?" ,
-          choice1:{name: "Leave camp", effect: ()=>{randomSocialEvent(); advancePhase(); toggleDialog()}},
-          choice2:{name: "Stay at camp", effect: ()=>{randomSocialEvent(); advancePhase(); toggleDialog()}}
+          choice1:{name: "Leave camp", effect: ()=>{leftCampEvent(); advancePhase(); toggleDialog()}},
+          choice2:{name: "Stay at camp", effect: ()=>{campEvent(); advancePhase(); toggleDialog()}}
         })
         toggleDialog()
         break

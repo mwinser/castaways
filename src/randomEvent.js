@@ -1,26 +1,26 @@
 const stayedAtCamp = [
     {
-        string: " made everyone laugh.",
+        string: "You made everyone laugh.",
         change: 5,
         players: 1
     },
     {
-        string: " was appreciated for helping out around camp.",
+        string: "You were appreciated for helping out around camp.",
         change: 10,
         players: 1
     },
     {
-        string: " burned the rice.",
+        string: "You burned the rice.",
         change: -5,
         players: 1
     },
     {
-        string: " was hanging out at camp too much",
+        string: "You have been hanging out at camp too much",
         change: -10,
         players: 1
     },
     {
-        string: " let one of the chickens loose.",
+        string: "You accidently let one of the chickens loose.",
         change: -20,
         players: 1
     },
@@ -67,32 +67,32 @@ const stayedAtCamp = [
 ]
 const leftCamp = [
     {
-        string: " refilled everyone's water bottles.",
+        string: "You refilled everyone's water bottles.",
         change: 5,
         players: 1
     },
     {
-        string: " was appreciated for bringing back firewood.",
+        string: "You were appreciated for bringing back firewood.",
         change: 10,
         players: 1
     },
     {
-        string: " forgot to refill water bottles.",
+        string: "You forgot to refill water bottles.",
         change: -5,
         players: 1
     },
     {
-        string: " was gone for too long",
+        string: "You were gone for too long",
         change: -10,
         players: 1
     },
     {
-        string: " caught a wild chicken.",
+        string: "You caught a wild chicken.",
         change: 20,
         players: 1
     },
     {
-        string: " found an immunity idol.",
+        string: "You found an immunity idol.",
         idol: true
     }
 ]
