@@ -21,14 +21,19 @@ function PhaseManager(){
             case 'EVENING EXILE':
                 playerState.length>3 ? setPhase('MORNING MINGLE') : setPhase('JURY VOTE')
                 break
+            case 'GAME OVER':
             case 'JURY VOTE':
                 setPhase('NEW GAME')
                 break
+            
             default:
                 break
         }
     }
-    return {phase, advancePhase}
+    function gameOverPhase (){
+        setPhase('GAME OVER')
+    }
+    return {phase, advancePhase, gameOverPhase}
 }
 
 export default PhaseManager

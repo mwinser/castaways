@@ -58,7 +58,7 @@ function ContextProvider ({children}) {
             payload: numPlayers
         })
     }
-    function removePlayer(name){
+     function removePlayer(name){
         setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===name)])
         dispatch({
             type: "REMOVE_PLAYER",

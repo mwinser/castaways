@@ -21,7 +21,7 @@ function App() {
     leftCampEvent,
     immunityChallenge, 
     resetPlayers} = useContext(Context)
-  const {phase, advancePhase} = PhaseManager()
+  const {phase, advancePhase, gameOverPhase} = PhaseManager()
   const [dialogData, setDialogData] = useState()
  
   function handlePhaseEvent (){
@@ -70,7 +70,7 @@ function App() {
           .map(player=>
             ({
               name: player.name, 
-              effect: ()=> {handleVote(player.name);advancePhase(); toggleDialog()}
+              effect: ()=> {handleVote(player.name)}
             })
           )
         
@@ -94,6 +94,19 @@ function App() {
         })
         toggleDialog()
         break
+      case 'GAME OVER':
+        setDialogData({
+          title:"The tribe has spoken" ,
+          content:"You were voted off the island! Play again?" ,
+          choices:[
+            {
+              name: "New Game", 
+              effect: ()=>{advancePhase(); toggleDialog()}
+            }
+          ]
+        })
+        toggleDialog()
+        break
       default:
         break
     }
@@ -108,6 +121,15 @@ function App() {
     })
     console.log(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
     removePlayer(voteLog.loserName)
+
+    if (voteLog.loserName===userPlayer){
+      console.log("you lose")
+      gameOverPhase()
+    } else {
+      advancePhase()
+    }
+    toggleDialog()
+
   }
   function juryVote(){
     const voteLog = voteOff(juryPlayers, playerState)
@@ -135,12 +157,22 @@ function App() {
         <div>{phase}</div>
         
       </div>
-      <div className="content">
-        {playerState.sort(compareByName).map((player, index)=>(
-            <PlayerCard key={index} player={player}/>
-        ))
-        }
-      </div>
+      {phase==='GAME OVER'? 
+        (
+          <div className="content">
+            <h1>
+              OH NO YOU LOST.
+            </h1>
+          </div>
+        ):(
+          <div className="content">
+            {playerState.sort(compareByName).map((player, index)=>(
+                <PlayerCard key={index} player={player}/>
+            ))
+            }
+          </div>
+        )
+      }
       <div className="footer">
         <div>Playing as: {userPlayer}</div>
         <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
