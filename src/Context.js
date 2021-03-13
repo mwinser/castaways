@@ -34,7 +34,6 @@ function ContextProvider ({children}) {
                     }
                     ]
             case 'CHANGE_LOYALTY':
-                console.log(action.payload)
                 player = playerState.find((player)=>player.name===action.payload.playerName)
                 
                 return [
@@ -145,14 +144,23 @@ function ContextProvider ({children}) {
         console.log(voteLog)
         return voteLog
     }
-    function immunityChallenge(participants){
+    function immunityChallenge(participants, effort){
         // random type of challenge mental, physical, social
         const trait = ["stamina","willpower", "dexterity", "intelligence"][~~(Math.random()*4)]
         //calculate winner
-        const winnerName = participants.reduce((best, participant)=>participant[trait]>best[trait]? participant : best).name
-        console.log(winnerName + " has won immunity in a "+ trait + "-based challenge!")
+        const winner = participants.reduce((best, participant)=>{
+            var value = participant[trait]
+            console.log(best)
+            if (participant.name===userPlayer){
+                console.log("Was " + value)
+                effort==="beast mode"? (value+=3) : (value-=3)
+                console.log("Now " + value)
+            }
+            return value>best[trait]? participant : best}
+            , {[trait]: 0 })
+        console.log(winner.name + " has won immunity in a "+ trait + "-based challenge!")
         //apply idol
-        setPlayerIdol(winnerName, true)
+        setPlayerIdol(winner.name, true)
 
     }
     function randomPlayers(number){

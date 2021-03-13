@@ -43,8 +43,8 @@ function App() {
         setDialogData({
           title:"Afternoon Immunity Challenge" ,
           content:"Everyday is a challenge, literally. Today will you be extra competitive or take it easy?" ,
-          choice1:{name: "CHALLENGE BEAST", effect: ()=>{immunityChallenge(playerState); advancePhase(); toggleDialog()}},
-          choice2:{name: "Lay low", effect: ()=>{immunityChallenge(playerState); advancePhase(); toggleDialog()}}
+          choice1:{name: "BEAST MODE", effect: ()=>{immunityChallenge(playerState, 'beast mode'); advancePhase(); toggleDialog()}},
+          choice2:{name: "Lay low", effect: ()=>{immunityChallenge(playerState, "lay low"); advancePhase(); toggleDialog()}}
         })
         toggleDialog()
         break
