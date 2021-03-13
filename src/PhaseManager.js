@@ -5,7 +5,7 @@ import { Context } from './Context'
 
 function PhaseManager(){
     const {playerState} = useContext(Context)
-    const [phase, setPhase] = useState('MORNING MINGLE')
+    const [phase, setPhase] = useState('NEW GAME')
 
     function advancePhase(){
         switch(phase){

@@ -12,6 +12,7 @@ function App() {
     playerState, 
     juryPlayers, 
     isDialogOpen,
+    userPlayer,
     toggleDialog,
     voteOff, 
     removePlayer, 
@@ -112,7 +113,7 @@ function App() {
         }
       </div>
       <div className="footer">
-        
+        <div>Playing as: {userPlayer}</div>
         <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
         <button onClick={()=>console.log(playerState)}>Remaining Players</button>
         <button onClick={()=>handlePhaseEvent()}>Resolve {phase}</button>

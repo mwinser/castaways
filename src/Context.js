@@ -5,15 +5,20 @@ import {onePlayerEvents, twoPlayerEvents, stayedAtCamp, leftCamp} from './random
 const Context = React.createContext(null)
 
 function ContextProvider ({children}) {
-    const playerData = NewGame(8)
+    const playerData = []
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [juryPlayers, setJuryPlayers] = useState([])
-    const [playerState, dispatch] = useReducer(playersReducer, playerData || [])
+    const [userPlayer, setUserPlayer] = useState("")
+    const [playerState, dispatch] = useReducer(playersReducer, playerData)
+    
     
     function playersReducer(playerState, action){
         switch (action.type) {
             case 'NEW_GAME':
-                return NewGame(action.payload)
+                const incomingCast = NewGame(action.payload)
+                const randoCastaway = incomingCast[~~(Math.random()*incomingCast.length)].name
+                setUserPlayer(randoCastaway)
+                return incomingCast
             case 'REMOVE_PLAYER':
                 return [...playerState.filter((player)=>player.name!==action.payload)];
             case 'REMOVE_ALL_IDOLS':
@@ -208,6 +213,7 @@ function ContextProvider ({children}) {
                 playerState,
                 juryPlayers,
                 isDialogOpen,
+                userPlayer,
                 toggleDialog,
                 voteOff,
                 setPlayerIdol,
