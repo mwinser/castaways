@@ -34,8 +34,16 @@ function App() {
         setDialogData({
           title:"Morning Mingle" ,
           content:"Camp life requires near constant work and everyone should pull their own weight. Will you leave camp to gather resources or stay in camp to help out there?" ,
-          choice1:{name: "Leave camp", effect: ()=>{leftCampEvent(); advancePhase(); toggleDialog()}},
-          choice2:{name: "Stay at camp", effect: ()=>{campEvent(); advancePhase(); toggleDialog()}}
+          choices:[
+            {
+              name: "Leave camp", 
+              effect: ()=>{leftCampEvent(); advancePhase(); toggleDialog()}
+            },
+            {
+              name: "Stay at camp", 
+              effect: ()=>{campEvent(); advancePhase(); toggleDialog()}
+            }
+          ]
         })
         toggleDialog()
         break
@@ -43,17 +51,33 @@ function App() {
         setDialogData({
           title:"Afternoon Immunity Challenge" ,
           content:"Everyday is a challenge, literally. Today will you be extra competitive or take it easy?" ,
-          choice1:{name: "BEAST MODE", effect: ()=>{immunityChallenge(playerState, 'beast mode'); advancePhase(); toggleDialog()}},
-          choice2:{name: "Lay low", effect: ()=>{immunityChallenge(playerState, "lay low"); advancePhase(); toggleDialog()}}
+          choices:[
+            {
+              name: "BEAST MODE", 
+              effect: ()=>{immunityChallenge(playerState, 'beast mode'); advancePhase(); toggleDialog()}
+            },
+            {
+              name: "Lay low", 
+              effect: ()=>{immunityChallenge(playerState, "lay low"); advancePhase(); toggleDialog()}
+            }
+        ]
         })
         toggleDialog()
         break
       case 'EVENING EXILE':
+        const choices = playerState
+          .filter(player=>!player.hasIdol && player.name!==userPlayer)
+          .map(player=>
+            ({
+              name: player.name, 
+              effect: ()=> {handleVote(player.name);advancePhase(); toggleDialog()}
+            })
+          )
+        
         setDialogData({
           title:"Evening Exile" ,
           content:"Every evening someone goes home. Who will you vote for?" ,
-          choice1:{name: "Physical Threat", effect: ()=>{handleVote(); advancePhase(); toggleDialog()}},
-          choice2:{name: "Social Threat", effect: ()=>{handleVote(); advancePhase(); toggleDialog()}}
+          choices: choices
         })
         toggleDialog()
         break
@@ -61,7 +85,12 @@ function App() {
         setDialogData({
           title:"And the winner is..." ,
           content:"The Jury will vote for the winner." ,
-          choice1:{name: "See the results", effect: ()=>{juryVote(); advancePhase(); toggleDialog()}}
+          choices:[
+            {
+              name: "See the results", 
+              effect: ()=>{juryVote(); advancePhase(); toggleDialog()}
+            }
+          ]
         })
         toggleDialog()
         break
@@ -71,8 +100,8 @@ function App() {
     advancePhase()
   }
 
-  function handleVote(){
-    const voteLog = voteOff(playerState, playerState)
+  function handleVote(userChoice){
+    const voteLog = voteOff(playerState, playerState, userChoice)
     console.log("Vote-off called!")
     Object.entries(voteLog.voteAgainstHistory).forEach(vote=>{
       console.log(vote[0] + " voted for " + vote[1])

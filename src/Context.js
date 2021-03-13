@@ -90,7 +90,7 @@ function ContextProvider ({children}) {
         setIsDialogOpen(prevState=>!prevState)
     }
 
-    function voteOff(voters, votees) {
+    function voteOff(voters, votees, userChoice) {
         var voteLog ={
             voteAgainstHistory: {},
             voteForHistory: {},
@@ -116,14 +116,19 @@ function ContextProvider ({children}) {
 
         //get individual votes based on loyalty
         voters.forEach((voter)=>{
-            //voteAgainstHistory
-            voteLog.voteAgainstHistory[voter.name] = voteeNames.reduce((min, name)=>
-                voter.loyalty[name]<voter.loyalty[min]? name : min
+            if (voter.name!==userPlayer){
+                //voteAgainstHistory
+                voteLog.voteAgainstHistory[voter.name] = voteeNames.reduce((min, name)=>
+                    voter.loyalty[name]<voter.loyalty[min]? name : min
+                    )
+                //voteForHistory
+                voteLog.voteForHistory[voter.name] = voteeNames.reduce((max, name)=>
+                voter.loyalty[name]>voter.loyalty[max]? name : max
                 )
-            //voteForHistory
-            voteLog.voteForHistory[voter.name] = voteeNames.reduce((max, name)=>
-            voter.loyalty[name]>voter.loyalty[max]? name : max
-            )
+            } else {
+                voteLog.voteAgainstHistory[voter.name] = userChoice
+                voteLog.voteForHistory[voter.name] = userChoice
+            }
         })
 
         //votesAgainst
