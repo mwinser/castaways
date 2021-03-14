@@ -5,7 +5,7 @@ function PlayerCard(props){
     const {userPlayer} = useContext(Context)
     const player = props.player
     return(
-        <div className="player-card">
+        <div id={player.name} className="player-card">
             <div className="card-name">
                 {player.name} {userPlayer===player.name && " (You)"}
             </div>

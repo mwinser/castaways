@@ -72,6 +72,7 @@ html, body {
 }
 
 
+
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -95,6 +96,12 @@ html, body {
   background-color: white;
   display: flex;
   flex-direction: column;
+  transition: all ease-in 1s;
+}
+
+.dying {
+  background-color: red;
+  opacity: 0;
 }
 .card-chunk {
   display: flex;

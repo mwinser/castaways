@@ -120,7 +120,11 @@ function App() {
       console.log(vote[0] + " voted for " + vote[1])
     })
     addToLogs(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
-    removePlayer(voteLog.loserName)
+    document.getElementById(voteLog.loserName).classList.add("dying")
+    setTimeout(()=>{
+      removePlayer(voteLog.loserName)
+    },1000)
+    
 
     if (voteLog.loserName===userPlayer){
       addToLogs("You lost.")
@@ -168,8 +172,8 @@ function App() {
           ):
             phase!=='CASTING' &&
             
-              playerState.sort(compareByName).map((player, index)=>(
-                  <PlayerCard key={index} player={player}/>
+              playerState.sort(compareByName).map((player)=>(
+                  <PlayerCard key={player.name} player={player}/>
               ))
               
             
