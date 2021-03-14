@@ -15,8 +15,7 @@ function App() {
     userPlayer,
     toggleDialog,
     voteOff, 
-    removePlayer, 
-    randomSocialEvent,
+    removePlayer,
     campEvent,
     leftCampEvent,
     immunityChallenge, 
@@ -27,12 +26,12 @@ function App() {
   function handlePhaseEvent (){
 
     switch(phase){
-      case 'NEW GAME':
+      case 'CASTING':
         resetPlayers(8)
         break
-      case 'MORNING MINGLE':
+      case 'MORNING':
         setDialogData({
-          title:"Morning Mingle" ,
+          title:"Camp Life" ,
           content:"Camp life requires near constant work and everyone should pull their own weight. Will you leave camp to gather resources or stay in camp to help out there?" ,
           choices:[
             {
@@ -47,9 +46,9 @@ function App() {
         })
         toggleDialog()
         break
-      case 'AFTERNOON CHALLENGE':
+      case 'AFTERNOON':
         setDialogData({
-          title:"Afternoon Immunity Challenge" ,
+          title:"Immunity Challenge" ,
           content:"Everyday is a challenge, literally. Today will you be extra competitive or take it easy?" ,
           choices:[
             {
@@ -64,7 +63,7 @@ function App() {
         })
         toggleDialog()
         break
-      case 'EVENING EXILE':
+      case 'EVENING':
         const choices = playerState
           .filter(player=>!player.hasIdol && player.name!==userPlayer)
           .map(player=>
@@ -75,13 +74,13 @@ function App() {
           )
         
         setDialogData({
-          title:"Evening Exile" ,
+          title:"Casting Away" ,
           content:"Every evening someone goes home. Who will you vote for?" ,
           choices: choices
         })
         toggleDialog()
         break
-      case 'JURY VOTE':
+      case 'FINALE':
         setDialogData({
           title:"And the winner is..." ,
           content:"The Jury will vote for the winner." ,
@@ -94,7 +93,7 @@ function App() {
         })
         toggleDialog()
         break
-      case 'GAME OVER':
+      case 'EXIT INTERVIEW':
         setDialogData({
           title:"The tribe has spoken" ,
           content:"You were voted off the island! Play again?" ,
@@ -133,7 +132,7 @@ function App() {
   }
   function juryVote(){
     const voteLog = voteOff(juryPlayers, playerState)
-    console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
+    console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" FINALEs!")
   }
 
   function compareByName(a,b){
@@ -158,7 +157,7 @@ function App() {
         
       </div>
       <div className="content">
-        {phase==='GAME OVER'? 
+        {phase==='EXIT INTERVIEW'? 
           (
             
               <h1>
@@ -166,7 +165,7 @@ function App() {
               </h1>
         
           ):
-            phase!=='NEW GAME' &&
+            phase!=='CASTING' &&
             
               playerState.sort(compareByName).map((player, index)=>(
                   <PlayerCard key={index} player={player}/>
@@ -177,9 +176,7 @@ function App() {
         }
       </div>
       <div className="footer">
-        <div>Playing as: {userPlayer}</div>
-        <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
-        <button onClick={()=>console.log(playerState)}>Remaining Players</button>
+        
         <button onClick={()=>handlePhaseEvent()}>Resolve {phase}</button>
         
       

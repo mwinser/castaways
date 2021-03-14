@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import {Context} from '../Context'
 
 function PlayerCard(props){
+    const {userPlayer} = useContext(Context)
     const player = props.player
     return(
         <div className="player-card">
         <div className="card-chunk">
             <div className="card-name">
-            {player.name}
+            {player.name} {userPlayer===player.name && " (You)"}
             </div>
             <div className="card-personality">
             {player.personality}

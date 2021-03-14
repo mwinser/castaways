@@ -5,25 +5,25 @@ import { Context } from './Context'
 
 function PhaseManager(){
     const {playerState} = useContext(Context)
-    const [phase, setPhase] = useState('NEW GAME')
+    const [phase, setPhase] = useState('CASTING')
 
     function advancePhase(){
         switch(phase){
-            case 'NEW GAME':
-                setPhase('MORNING MINGLE')
+            case 'CASTING':
+                setPhase('MORNING')
                 break
-            case 'MORNING MINGLE':
-                setPhase('AFTERNOON CHALLENGE')
+            case 'MORNING':
+                setPhase('AFTERNOON')
                 break
-            case 'AFTERNOON CHALLENGE':
-                setPhase('EVENING EXILE')
+            case 'AFTERNOON':
+                setPhase('EVENING')
                 break
-            case 'EVENING EXILE':
-                playerState.length>3 ? setPhase('MORNING MINGLE') : setPhase('JURY VOTE')
+            case 'EVENING':
+                playerState.length>3 ? setPhase('MORNING') : setPhase('FINALE')
                 break
-            case 'GAME OVER':
-            case 'JURY VOTE':
-                setPhase('NEW GAME')
+            case 'EXIT INTERVIEW':
+            case 'FINALE':
+                setPhase('CASTING')
                 break
             
             default:
@@ -31,7 +31,7 @@ function PhaseManager(){
         }
     }
     function gameOverPhase (){
-        setPhase('GAME OVER')
+        setPhase('EXIT INTERVIEW')
     }
     return {phase, advancePhase, gameOverPhase}
 }
