@@ -31,22 +31,25 @@ function PlayerCard(props){
                     <div>{player.personality}</div>
                 </div>
             </div>
-        <div className="card-chunk">
-            <div className="age">
-            Age:{player.age}
+            <div className="card-chunks">
+                <div className="card-chunk">
+                    <div className="age">
+                    {player.age}yrs old
+                    </div>
+                    <div className="job">
+                    {player.job}
+                    </div>
+                </div>
+                <div className="card-chunk">
+                    <div className="family">
+                    {player.family}
+                    </div>
+                    <div className="region">
+                    {player.region}
+                    </div>
+                </div>
             </div>
-            <div className="job">
-            {player.job}
-            </div>
-        </div>
-        <div className="card-chunk">
-            <div className="family">
-            {player.family}
-            </div>
-            <div className="region">
-            {player.region}
-            </div>
-        </div>
+            
         </div>
     )
 }

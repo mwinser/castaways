@@ -4,7 +4,7 @@ function NewGame (numPlayers) {
     var playerData = []
     const allNames = ["Sammy", "Barry", "Dan", "Candice", "Clementine", "Ziggy", "Adam", "Alex", "Ambrosia", "Tony", "Tina", "Jude", "DeShawn", "Mike", "Stevie", "Sam", "Elliot", "Rob", "Roberto", "Robbie", "Bobby", "Amy", "Beth", "Charlie", "Freya", "Dom", "Latoya"]
     var unusedNames = allNames.slice()
-    const jobs = ["Unemployed", "Server","Student","Powerplant Manager", "Construction Worker","Truck Driver","Firefighter", "Cop","Soldier","Therapist", "Astrophysicist","Professor","Life Coach", "Stock Broker","Lawyer"]
+    const jobs = ["Unemployed", "Server","Student","Operations", "Construction","Trucker","Firefighter", "Cop","Soldier","Therapist", "Astrophysicist","Professor","Lifecoach", "Stockbroker","Lawyer"]
     const regions = ["Northeast", "South", "Midwest", "Northwest", "Southwest"]
     const families = ["Single", "Married", "Has Kids"]
 
