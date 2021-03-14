@@ -6,14 +6,31 @@ function PlayerCard(props){
     const player = props.player
     return(
         <div className="player-card">
-        <div className="card-chunk">
             <div className="card-name">
-            {player.name} {userPlayer===player.name && " (You)"}
+                {player.name} {userPlayer===player.name && " (You)"}
             </div>
-            <div className="card-personality">
-            {player.personality}
+            <div className="attributes">
+                <div>
+                    <div>Stamina:</div>
+                    <div>{player.stamina}</div>
+                </div>
+                <div>
+                    <div>Dexterity</div>
+                    <div>{player.dexterity}</div>
+                </div>
+                <div>
+                    <div>Willpower</div>
+                    <div>{player.willpower}</div>
+                </div>
+                <div>
+                    <div>Intelligence</div>
+                    <div>{player.intelligence}</div>
+                </div>
+                <div>
+                    <div>Personality</div>
+                    <div>{player.personality}</div>
+                </div>
             </div>
-        </div>
         <div className="card-chunk">
             <div className="age">
             Age:{player.age}
