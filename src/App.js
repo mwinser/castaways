@@ -4,6 +4,7 @@ import PlayerCard from './components/PlayerCard';
 import { Context } from './Context';
 import PhaseManager from './PhaseManager';
 import ChoiceBox from './ChoiceBox';
+import EventLogs from './components/EventLog';
 
 
 
@@ -13,6 +14,7 @@ function App() {
     juryPlayers, 
     isDialogOpen,
     userPlayer,
+    addToLogs,
     toggleDialog,
     voteOff, 
     removePlayer,
@@ -22,12 +24,12 @@ function App() {
     resetPlayers} = useContext(Context)
   const {phase, advancePhase, gameOverPhase} = PhaseManager()
   const [dialogData, setDialogData] = useState()
- 
   function handlePhaseEvent (){
 
     switch(phase){
       case 'CASTING':
         resetPlayers(8)
+        addToLogs("8 new players have been announced.")
         break
       case 'MORNING':
         setDialogData({
@@ -114,15 +116,14 @@ function App() {
 
   function handleVote(userChoice){
     const voteLog = voteOff(playerState, playerState, userChoice)
-    console.log("Vote-off called!")
     Object.entries(voteLog.voteAgainstHistory).forEach(vote=>{
       console.log(vote[0] + " voted for " + vote[1])
     })
-    console.log(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
+    addToLogs(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
     removePlayer(voteLog.loserName)
 
     if (voteLog.loserName===userPlayer){
-      console.log("you lose")
+      addToLogs("You lost.")
       gameOverPhase()
     } else {
       advancePhase()
@@ -132,7 +133,7 @@ function App() {
   }
   function juryVote(){
     const voteLog = voteOff(juryPlayers, playerState)
-    console.log(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" FINALEs!")
+    addToLogs(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
   }
 
   function compareByName(a,b){
@@ -177,6 +178,7 @@ function App() {
       </div>
       <div className="footer">
         
+        <EventLogs/>
         <button onClick={()=>handlePhaseEvent()}>Resolve {phase}</button>
         
       

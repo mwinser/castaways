@@ -6,10 +6,16 @@ const Context = React.createContext(null)
 
 function ContextProvider ({children}) {
     const playerData = []
+    const [eventLogs, setEventLogs] = useState(['Welcome to Castaways!'])
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [juryPlayers, setJuryPlayers] = useState([])
     const [userPlayer, setUserPlayer] = useState("")
     const [playerState, dispatch] = useReducer(playersReducer, playerData)
+    
+    
+    function addToLogs (newEvent) {
+        setEventLogs(prevState=>[...prevState, newEvent])
+    }
     
     
     function playersReducer(playerState, action){
@@ -18,6 +24,7 @@ function ContextProvider ({children}) {
                 const incomingCast = NewGame(action.payload)
                 const randoCastaway = incomingCast[~~(Math.random()*incomingCast.length)].name
                 setUserPlayer(randoCastaway)
+                addToLogs("You are playing as "+randoCastaway + ".")
                 return incomingCast
             case 'REMOVE_PLAYER':
                 return [...playerState.filter((player)=>player.name!==action.payload)];
@@ -155,15 +162,12 @@ function ContextProvider ({children}) {
         //calculate winner
         const winner = participants.reduce((best, participant)=>{
             var value = participant[trait]
-            console.log(best)
             if (participant.name===userPlayer){
-                console.log("Was " + value)
                 effort==="beast mode"? (value+=3) : (value-=3)
-                console.log("Now " + value)
             }
             return value>best[trait]? participant : best}
             , {[trait]: 0 })
-        console.log(winner.name + " has won immunity in a "+ trait + "-based challenge!")
+       addToLogs(winner.name + " has won immunity in a "+ trait + "-based challenge!")
         //apply idol
         setPlayerIdol(winner.name, true)
 
@@ -182,25 +186,25 @@ function ContextProvider ({children}) {
     function campEvent(){
         const event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
         if (event.players===1){
-            console.log(event.string + " Group loyalty changed by " + event.change)
+            addToLogs(event.string + " Group loyalty changed by " + event.change)
             const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
             everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
             return null
         }
         const otherPlayer = randomPlayers(1)[0]
-        console.log("You and " + otherPlayer + event.string + ' Loyalty changed by ' + event.change)
+        addToLogs("You and " + otherPlayer + event.string + ' Loyalty changed by ' + event.change)
         changeLoyalty(userPlayer, otherPlayer, event.change)
         changeLoyalty(otherPlayer, userPlayer, event.change)
     }
     function leftCampEvent(){
         const event = leftCamp[~~(Math.random()*leftCamp.length)]
         if (event.players===1){
-            console.log(event.string + " Group loyalty changed by " + event.change)
+            addToLogs(event.string + " Group loyalty changed by " + event.change)
             const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
             everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
             return null
         }
-        console.log(event.string)
+        addToLogs(event.string)
         setPlayerIdol(userPlayer, true)
     }
     function randomSocialEvent() {
@@ -235,6 +239,8 @@ function ContextProvider ({children}) {
                 juryPlayers,
                 isDialogOpen,
                 userPlayer,
+                eventLogs,
+                addToLogs,
                 toggleDialog,
                 voteOff,
                 setPlayerIdol,
