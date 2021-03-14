@@ -11,7 +11,7 @@ function ChoiceBox(props){
             </div>
             <div className="choices">
                 {dialog.choices.map((choice, index)=>(
-                    <div className="btn" id={`choice${index}`} onClick={choice.effect}>
+                    <div className="btn" key={index} id={`choice${index}`} onClick={choice.effect}>
                         {choice.name}
                     </div>
                 ))}

@@ -48,10 +48,12 @@ html, body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 .choicebox .btn {
   background:rgb(143, 210, 255);
   padding: .8rem;
+  margin: .5rem 1rem;
   font-weight: bold;
   border-radius: 1em;
 }

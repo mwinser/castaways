@@ -100,7 +100,7 @@ function App() {
           content:"You were voted off the island! Play again?" ,
           choices:[
             {
-              name: "New Game", 
+              name: "Restart", 
               effect: ()=>{advancePhase(); toggleDialog()}
             }
           ]
@@ -157,22 +157,25 @@ function App() {
         <div>{phase}</div>
         
       </div>
-      {phase==='GAME OVER'? 
-        (
-          <div className="content">
-            <h1>
-              OH NO YOU LOST.
-            </h1>
-          </div>
-        ):(
-          <div className="content">
-            {playerState.sort(compareByName).map((player, index)=>(
-                <PlayerCard key={index} player={player}/>
-            ))
-            }
-          </div>
-        )
-      }
+      <div className="content">
+        {phase==='GAME OVER'? 
+          (
+            
+              <h1>
+                OH NO YOU LOST.
+              </h1>
+        
+          ):
+            phase!=='NEW GAME' &&
+            
+              playerState.sort(compareByName).map((player, index)=>(
+                  <PlayerCard key={index} player={player}/>
+              ))
+              
+            
+          
+        }
+      </div>
       <div className="footer">
         <div>Playing as: {userPlayer}</div>
         <button onClick={()=>console.table(juryPlayers.map(juror=>juror.loyalty))}>Jury Players</button>
