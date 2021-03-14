@@ -5,8 +5,10 @@ function EventLogs (props) {
     const {eventLogs} = useContext(Context)
 
     return (
-        <div className="EventLog">
-            {eventLogs.map((log, index)=>(<p key={index}>{log}</p>))}
+        <div className="event-log-wrapper">
+            <div className="event-log">
+                {eventLogs.map((log, index)=>(<p key={index}>{log}</p>))}
+            </div>
         </div>
     )
 }

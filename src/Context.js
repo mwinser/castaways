@@ -21,9 +21,11 @@ function ContextProvider ({children}) {
     function playersReducer(playerState, action){
         switch (action.type) {
             case 'NEW_GAME':
+                setEventLogs(["Welcome to Castaways!"])
                 const incomingCast = NewGame(action.payload)
                 const randoCastaway = incomingCast[~~(Math.random()*incomingCast.length)].name
                 setUserPlayer(randoCastaway)
+                addToLogs("8 new players have been announced.")
                 addToLogs("You are playing as "+randoCastaway + ".")
                 return incomingCast
             case 'REMOVE_PLAYER':

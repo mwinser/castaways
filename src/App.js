@@ -29,7 +29,7 @@ function App() {
     switch(phase){
       case 'CASTING':
         resetPlayers(8)
-        addToLogs("8 new players have been announced.")
+        
         break
       case 'MORNING':
         setDialogData({
