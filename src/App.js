@@ -183,7 +183,7 @@ function App() {
       <div className="footer">
         
         <EventLogs/>
-        <button onClick={()=>handlePhaseEvent()}>Resolve {phase}</button>
+        <button onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
         
       
       
