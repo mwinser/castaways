@@ -157,8 +157,8 @@ function App() {
   return (
     <div className="fullscreen">
       <div className="header">
-        <div>Castaways</div>
-        <div>{phase}</div>
+        <div className="logo">CASTAWAYS</div>
+        
         
       </div>
       <div className="content">

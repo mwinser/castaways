@@ -79,7 +79,7 @@ function NewGame (numPlayers) {
                 case ["Unemployed", "Server","Student"].some(job=> job===player.job):
                     player.job_category = 0
                     break
-                case ["Powerplant Manager", "Construction Worker","Truck Driver"].some(job=> job===player.job):
+                case ["Operations", "Construction","Trucker"].some(job=> job===player.job):
                     player.job_category = 5
                     break
                 case ["Firefighter", "Cop","Soldier"].some(job=> job===player.job):
@@ -88,7 +88,7 @@ function NewGame (numPlayers) {
                 case ["Therapist", "Astrophysicist","Professor"].some(job=> job===player.job):    
                     player.job_category = 15
                     break
-                case ["Life Coach", "Stock Broker","Lawyer"].some(job=> job===player.job):
+                case ["Lifecoach", "Stockbroker","Lawyer"].some(job=> job===player.job):
                     player.job_category = 20
                     break
                 default:
