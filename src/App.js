@@ -24,12 +24,12 @@ function App() {
     resetPlayers} = useContext(Context)
   const {phase, advancePhase, gameOverPhase} = PhaseManager()
   const [dialogData, setDialogData] = useState()
+  
   function handlePhaseEvent (){
 
     switch(phase){
       case 'CASTING':
         resetPlayers(8)
-        
         break
       case 'MORNING':
         setDialogData({
@@ -139,7 +139,7 @@ function App() {
     const voteLog = voteOff(juryPlayers, playerState)
     addToLogs(voteLog.winnerName + " won the game with " + voteLog.winnerVotesFor +" jury votes!")
   }
-
+  //for sorting player cards alphabetically
   function compareByName(a,b){
     const playerA = a.name.toUpperCase();
     const playerB = b.name.toUpperCase();
@@ -158,36 +158,25 @@ function App() {
     <div className="fullscreen">
       <div className="header">
         <div className="logo">CASTAWAYS</div>
-        
-        
       </div>
       <div className="content">
         {phase==='EXIT INTERVIEW'? 
           (
-            
-              <h1>
-                OH NO YOU LOST.
-              </h1>
-        
+          <h1>
+            OH NO YOU LOST.
+          </h1>
           ):
-            phase!=='CASTING' &&
-            
-              playerState.sort(compareByName).map((player)=>(
-                  <PlayerCard key={player.name} player={player}/>
-              ))
-              
-            
-          
+          phase!=='CASTING' &&
+            playerState.sort(compareByName).map((player)=>(
+                <PlayerCard key={player.name} player={player}/>
+            ))
         }
       </div>
       <div className="footer">
-        
         <EventLogs/>
         <button onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
-        
-      
-      
       </div>
+      {/* popup choice box */}
       {isDialogOpen && dialogData &&
         <ChoiceBox 
           dialog = {dialogData}
