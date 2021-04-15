@@ -9,8 +9,8 @@ import EventLog from './components/EventLog';
 
 
 function App() {
-  const {playerState, isDialogOpen} = useContext(Context)
-  const {phase, dialogData, handlePhaseEvent} = PhaseManager()
+  const {playerState} = useContext(Context)
+  const {phase, handlePhaseEvent} = PhaseManager()
   
   //for sorting player cards alphabetically
   function compareByName(a,b){
@@ -53,12 +53,9 @@ function App() {
         <button onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
       </div>
 
-      {/* popup choice box */}
-      {isDialogOpen && dialogData &&
-        <ChoiceBox 
-          dialog = {dialogData}
-        />
-      }
+      
+        <ChoiceBox />
+      
     </div>
   )
 }

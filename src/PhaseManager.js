@@ -4,17 +4,12 @@ import { Context } from './Context'
 
 
 function PhaseManager(){
-    const {playerState, toggleDialog, resetPlayers, campEvent, leftCampEvent, immunityChallenge, userPlayer, voteOff, addToLogs,removePlayer, juryPlayers} = useContext(Context)
+    const {playerState, toggleDialog, resetPlayers, campEvent, leftCampEvent, immunityChallenge, userPlayer, voteOff, addToLogs,removePlayer, juryPlayers, changeDialogData} = useContext(Context)
     const [phase, setPhase] = useState('CASTING')
-    const [dialogData, setDialogData] = useState()
 
-    function changeDialogData(input) {
-        setDialogData(input)
-    }
 
 
     function handlePhaseEvent (){
-        //depends on phase, resetPlayers, changeDialogData, leftCampEvent, advancePhase, toggleDialog, immunityChallenge, playerState, 
         switch(phase){
           case 'CASTING':
             resetPlayers(8)
@@ -158,7 +153,7 @@ function PhaseManager(){
     function gameOverPhase (){
         setPhase('EXIT INTERVIEW')
     }
-    return {phase, advancePhase, gameOverPhase, dialogData, changeDialogData, handlePhaseEvent}
+    return {phase, handlePhaseEvent}
 }
 
 export default PhaseManager

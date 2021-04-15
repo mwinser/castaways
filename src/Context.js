@@ -11,7 +11,12 @@ function ContextProvider ({children}) {
     const [juryPlayers, setJuryPlayers] = useState([])
     const [userPlayer, setUserPlayer] = useState("")
     const [playerState, dispatch] = useReducer(playersReducer, playerData)
+    const [dialogData, setDialogData] = useState()
     
+
+    function changeDialogData(input) {
+        setDialogData(input)
+    }
     
     function addToLogs (newEvent) {
         setEventLogs(prevState=>[...prevState, newEvent])
@@ -242,6 +247,7 @@ function ContextProvider ({children}) {
                 isDialogOpen,
                 userPlayer,
                 eventLogs,
+                dialogData,
                 addToLogs,
                 toggleDialog,
                 voteOff,
@@ -252,7 +258,8 @@ function ContextProvider ({children}) {
                 randomSocialEvent,
                 campEvent,
                 leftCampEvent,
-                resetPlayers
+                resetPlayers,
+                changeDialogData
             }}
         >
             {children}

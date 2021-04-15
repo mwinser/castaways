@@ -1,16 +1,21 @@
-function ChoiceBox(props){
-    const {dialog} = props
-    return (
+import React, {useContext} from 'react'
+import { Context } from "./Context"
+
+
+function ChoiceBox(){
+    const {isDialogOpen, dialogData} = useContext(Context)
+    return isDialogOpen ?
+    (
     <div className="choicebox">
         <div className="box">
             <div className="title">
-                {dialog.title}
+                {dialogData.title}
             </div>
             <div className="dialog">
-                {dialog.content}
+                {dialogData.content}
             </div>
             <div className="choices">
-                {dialog.choices.map((choice, index)=>(
+                {dialogData.choices.map((choice, index)=>(
                     <div className="btn" key={index} id={`choice${index}`} onClick={choice.effect}>
                         {choice.name}
                     </div>
@@ -20,5 +25,7 @@ function ChoiceBox(props){
         </div>
     </div>
     )
+    : null
+    
 }
 export default ChoiceBox
