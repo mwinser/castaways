@@ -5,6 +5,7 @@ import { Context } from './Context';
 import PhaseManager from './PhaseManager';
 import ChoiceBox from './ChoiceBox';
 import EventLog from './components/EventLog';
+import compareByName from './utils/compareByName'
 
 
 
@@ -12,19 +13,7 @@ function App() {
   const {playerState} = useContext(Context)
   const {phase, handlePhaseEvent} = PhaseManager()
   
-  //for sorting player cards alphabetically
-  function compareByName(a,b){
-    const playerA = a.name.toUpperCase();
-    const playerB = b.name.toUpperCase();
-  
-    let comparison = 0;
-    if (playerA > playerB) {
-      comparison = 1;
-    } else if (playerA < playerB) {
-      comparison = -1;
-    }
-    return comparison;
-  }
+
 
   
 
