@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Context } from '../Context'
 
-function EventLogs (props) {
+function EventLog (props) {
     const {eventLogs} = useContext(Context)
 
     return (
@@ -13,4 +13,4 @@ function EventLogs (props) {
     )
 }
 
-export default EventLogs
+export default EventLog
