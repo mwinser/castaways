@@ -1,6 +1,8 @@
 # Castaways
 
-This is a personal project to create a reality show simulator in the style of Survivor and Big Brother
+This is a personal project to create a reality show simulator/game in the style of Survivor
 
-## More info to come!
+I learned about data structures and complex state management using useReducer
+Challenges included balancing user experience with complicated unseen game logic
+
 
