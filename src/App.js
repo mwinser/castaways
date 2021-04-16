@@ -11,10 +11,7 @@ import compareByName from './utils/compareByName'
 
 function App() {
   const {playerState} = useContext(Context)
-  const {phase, handlePhaseEvent} = PhaseManager()
-  
-
-
+  const {phase, handlePhaseEvent, isPaused} = PhaseManager()
   
 
   return (
@@ -39,7 +36,7 @@ function App() {
       
       <div className="footer">
         <EventLog/>
-        <button onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
+        <button disabled={isPaused} onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
       </div>
 
       

@@ -6,6 +6,7 @@ import { Context } from './Context'
 function PhaseManager(){
     const {playerState, toggleDialog, resetPlayers, campEvent, leftCampEvent, immunityChallenge, userPlayer, voteOff, addToLogs,removePlayer, juryPlayers, changeDialogData} = useContext(Context)
     const [phase, setPhase] = useState('CASTING')
+    const [isPaused, setIsPaused] = useState(false)
 
 
 
@@ -99,19 +100,21 @@ function PhaseManager(){
 
       
   function handleVote(userChoice){
+    //dependent on playerState, addToLogs, removePlayer, userPlayer, gameOverPhase, advancePhase, ToggleDialog
     const voteLog = voteOff(playerState, playerState, userChoice)
     Object.entries(voteLog.voteAgainstHistory).forEach(vote=>{
       console.log(vote[0] + " voted for " + vote[1])
     })
     addToLogs(voteLog.loserName + " voted off with " + voteLog.loserVotesAgainst + " votes.")
     document.getElementById(voteLog.loserName).classList.add("dying")
+    setIsPaused(true)
     setTimeout(()=>{
       removePlayer(voteLog.loserName)
+      setIsPaused(false)
     },1000)
     
-
+    //check if player is loser
     if (voteLog.loserName===userPlayer){
-      addToLogs("You lost.")
       gameOverPhase()
     } else {
       advancePhase()
@@ -151,9 +154,10 @@ function PhaseManager(){
         }
     }
     function gameOverPhase (){
+        addToLogs("You lost.")
         setPhase('EXIT INTERVIEW')
     }
-    return {phase, handlePhaseEvent}
+    return {phase, handlePhaseEvent, isPaused}
 }
 
 export default PhaseManager

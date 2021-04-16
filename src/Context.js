@@ -17,11 +17,12 @@ function ContextProvider ({children}) {
     function changeDialogData(input) {
         setDialogData(input)
     }
-    
     function addToLogs (newEvent) {
         setEventLogs(prevState=>[...prevState, newEvent])
     }
-    
+    function toggleDialog(){
+        setIsDialogOpen(prevState=>!prevState)
+    }
     
     function playersReducer(playerState, action){
         switch (action.type) {
@@ -72,7 +73,7 @@ function ContextProvider ({children}) {
             payload: numPlayers
         })
     }
-     function removePlayer(name){
+    function removePlayer(name){
         setJuryPlayers([...juryPlayers, playerState.find(player=>player.name===name)])
         dispatch({
             type: "REMOVE_PLAYER",
@@ -100,9 +101,10 @@ function ContextProvider ({children}) {
         
     }
 
-    function toggleDialog(){
-        setIsDialogOpen(prevState=>!prevState)
-    }
+
+
+
+
 
     function voteOff(voters, votees, userChoice) {
         var voteLog ={

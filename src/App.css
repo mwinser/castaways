@@ -173,6 +173,9 @@ html, body {
   border: unset;
 
 }
+.footer button:disabled {
+  background-color: rgb(113, 122, 148);
+}
 .event-log-wrapper {
   background-color: white;
   height: 100%;
