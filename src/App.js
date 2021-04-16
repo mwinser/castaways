@@ -1,5 +1,5 @@
 import './App.css';
-import ChoiceBox from './ChoiceBox';
+import ChoiceBox from './components/ChoiceBox';
 import PlayerDisplay from './components/PlayerDisplay';
 import Header from './components/Header';
 import Footer from './components/Footer';
