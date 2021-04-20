@@ -48,6 +48,15 @@ function ContextProvider ({children}) {
                     hasIdol: action.payload.value
                     }
                     ]
+            case 'ADD_CHALLENGE_WIN':
+                player = playerState.find((player)=>player.name===action.payload.playerName)
+                return [
+                    ...playerState.filter((player)=>player.name!==action.payload.playerName), 
+                    {
+                    ...player,
+                    challengeWins: player.challengeWins++
+                    }
+                ] 
             case 'CHANGE_LOYALTY':
                 player = playerState.find((player)=>player.name===action.payload.playerName)
                 
@@ -86,6 +95,12 @@ function ContextProvider ({children}) {
             payload: {playerName, value}
         })
     }
+    function addChallengeWin(playerName){
+        dispatch({
+            type: "ADD_CHALLENGE_WIN",
+            payload: {playerName}
+        })
+    }
     function removeAllIdols(){
         
         dispatch({
@@ -119,28 +134,32 @@ function ContextProvider ({children}) {
             idolWasUsed: false
         }
 
-        //get voteeNames
-        const voteeNames = votees.filter(votee=>!votee.hasIdol).map(votee=>{
+        //get voteePlayers - default idol use
+        const voteePlayers = votees.filter(votee=>!votee.hasIdol).map(votee=>{
             voteLog.votesAgainst[votee.name] = 0
             voteLog.votesFor[votee.name] = 0
-            return votee.name
+            return votee
         })
-        //check that idol was used
-        if (voteeNames.length!==votees.length){
+        //check that idol was used 
+        if (voteePlayers.length!==votees.length){
             voteLog.idolWasUsed = true
         }
 
-        //get individual votes based on loyalty
+        //get individual votes based on loyalty and threatLevel/challengeWins
         voters.forEach((voter)=>{
             if (voter.name!==userPlayer){
-                //voteAgainstHistory
-                voteLog.voteAgainstHistory[voter.name] = voteeNames.reduce((min, name)=>
-                    voter.loyalty[name]<voter.loyalty[min]? name : min
-                    )
-                //voteForHistory
-                voteLog.voteForHistory[voter.name] = voteeNames.reduce((max, name)=>
-                voter.loyalty[name]>voter.loyalty[max]? name : max
-                )
+                //voteAgainstHistory - for removal
+                voteLog.voteAgainstHistory[voter.name] = voteePlayers.reduce((worst, votee)=>
+                    (voter.loyalty[votee.name]-votee.challengeWins) < (voter.loyalty[worst.name]-worst.challengeWins) 
+                        ? votee 
+                        : worst
+                    ).name
+                //voteForHistory - for winner
+                voteLog.voteForHistory[voter.name] = voteePlayers.reduce((best, votee)=>
+                    (voter.loyalty[votee.name]+votee.challengeWins) > (voter.loyalty[best.name]+best.challengeWins)
+                        ? votee 
+                        : best
+                    ).name
             } else {
                 voteLog.voteAgainstHistory[voter.name] = userChoice
                 voteLog.voteForHistory[voter.name] = userChoice
@@ -153,12 +172,12 @@ function ContextProvider ({children}) {
         voters.forEach(voter=> voteLog.votesFor[voteLog.voteForHistory[voter.name]]+=1)
 
         //loserName and loserVotesAgainst
-        voteLog.loserVotesAgainst = voteeNames.reduce((max, name)=> voteLog.votesAgainst[name]>max ? voteLog.votesAgainst[name] : max, 0 )
-        voteLog.loserName = voteeNames.reduce((max, name)=> voteLog.votesAgainst[name]>voteLog.votesAgainst[max] ? name : max )
+        voteLog.loserVotesAgainst = voteePlayers.reduce((max, votee)=> voteLog.votesAgainst[votee.name]>max ? voteLog.votesAgainst[votee.name] : max, 0 )
+        voteLog.loserName = voteePlayers.reduce((max, votee)=> voteLog.votesAgainst[votee.name]>voteLog.votesAgainst[max.name] ? votee : max ).name
         
         //winnerName and winnerVotesFor
-        voteLog.winnerVotesFor = voteeNames.reduce((max, name)=> voteLog.votesFor[name]>max ? voteLog.votesFor[name] : max, 0 )
-        voteLog.winnerName = voteeNames.reduce((max, name)=> voteLog.votesFor[name]>voteLog.votesFor[max] ? name : max )
+        voteLog.winnerVotesFor = voteePlayers.reduce((max, votee)=> voteLog.votesFor[votee.name]>max ? voteLog.votesFor[votee.name] : max, 0 )
+        voteLog.winnerName = voteePlayers.reduce((max, votee)=> voteLog.votesFor[votee.name]>voteLog.votesFor[max] ? votee : max ).name
         
         //idols automatically used up each vote
         removeAllIdols()
@@ -186,6 +205,7 @@ function ContextProvider ({children}) {
             return value>best[trait]? participant : best}
             , {[trait]: 0 })
         addToLogs(winner.name + " has won immunity in a "+ trait + "-based challenge!")
+        addChallengeWin(winner.name)
         setPlayerIdol(winner.name, true)
 
     }

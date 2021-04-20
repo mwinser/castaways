@@ -34,6 +34,7 @@ function NewGame (numPlayers) {
                 family: families[~~(Math.random()*families.length)],
                 personality: ~~(Math.random()*20),
                 votesAgainst: 0,
+                challengeWins: 0,
                 stamina: ~~(Math.random()*20),
                 willpower: ~~(Math.random()*20),
                 dexterity: ~~(Math.random()*20),

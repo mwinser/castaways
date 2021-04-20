@@ -46,7 +46,7 @@ function PhaseManager(){
           case 'AFTERNOON':
             changeDialogData({
               title:"Immunity Challenge" ,
-              content:"Everyday is a challenge, literally. How hard will you compete?" ,
+              content:"Everyday is a challenge, literally. Winning will give you immunity in the next vote, but winning too often will paint a target on your back. How hard will you compete?" ,
               choices:[
                 {
                   name: "BEAST MODE", 
