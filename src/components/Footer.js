@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <div className="footer">
             <EventLog/>
-            <button disabled={isPaused} onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
+            <button disabled={isPaused} className='btn' onClick={()=>handlePhaseEvent()}>Begin {phase}</button>
         </div>
     )
 }

@@ -51,7 +51,7 @@ html, body {
   align-items: center;
   flex-wrap: wrap;
 }
-.choicebox .btn {
+.btn {
   background:rgb(49, 64, 111);
   padding: .8rem;
   margin: .5rem 1rem;
