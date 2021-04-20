@@ -192,30 +192,35 @@ function ContextProvider ({children}) {
         }
         return output
     }
-    function campEvent(){
-        const event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
+    function morningEvent(playerChoice){
+        let event
+        if (playerChoice==='stay'){
+            event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
+        }
+        if (playerChoice==='leave'){
+            event = leftCamp[~~(Math.random()*leftCamp.length)]
+        }
         if (event.players===1){
-            addToLogs(event.string + " Group loyalty changed by " + event.change)
+            if (event.idol){
+                setPlayerIdol(userPlayer, true)
+                addToLogs(event.string)
+                return null
+            }
             const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
             everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
+            addToLogs(event.string + " Group loyalty changed by " + event.change)
             return null
         }
+        if (event.players===2){
         const otherPlayer = randomPlayers(1)[0]
-        addToLogs("You and " + otherPlayer + event.string + ' Loyalty changed by ' + event.change)
+        
         changeLoyalty(userPlayer, otherPlayer, event.change)
         changeLoyalty(otherPlayer, userPlayer, event.change)
-    }
-    function leftCampEvent(){
-        const event = leftCamp[~~(Math.random()*leftCamp.length)]
-        if (event.players===1){
-            addToLogs(event.string + " Group loyalty changed by " + event.change)
-            const everyoneElse = playerState.filter(player=>player.name!==userPlayer).map(player=>player.name)
-            everyoneElse.map(playerName=>changeLoyalty(playerName,userPlayer, event.change))
-            return null
+        addToLogs("You and " + otherPlayer + event.string + ' Loyalty changed by ' + event.change)
         }
-        addToLogs(event.string)
-        setPlayerIdol(userPlayer, true)
+        
     }
+
     function randomSocialEvent() {
         const numInvolved = ~~(Math.random()*2)+1
         const playersInvolved = randomPlayers(numInvolved)
@@ -258,8 +263,7 @@ function ContextProvider ({children}) {
                 changeLoyalty,
                 immunityChallenge,
                 randomSocialEvent,
-                campEvent,
-                leftCampEvent,
+                morningEvent,
                 resetPlayers,
                 changeDialogData
             }}

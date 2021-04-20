@@ -4,7 +4,18 @@ import { Context } from './Context'
 
 
 function PhaseManager(){
-    const {playerState, toggleDialog, resetPlayers, campEvent, leftCampEvent, immunityChallenge, userPlayer, voteOff, addToLogs,removePlayer, juryPlayers, changeDialogData} = useContext(Context)
+    const {
+      playerState, 
+      toggleDialog, 
+      resetPlayers, 
+      morningEvent, 
+      immunityChallenge, 
+      userPlayer, 
+      voteOff, 
+      addToLogs,
+      removePlayer, 
+      juryPlayers, 
+      changeDialogData} = useContext(Context)
     const [phase, setPhase] = useState('CASTING')
     const [isPaused, setIsPaused] = useState(false)
 
@@ -22,11 +33,11 @@ function PhaseManager(){
               choices:[
                 {
                   name: "Leave camp", 
-                  effect: ()=>{leftCampEvent(); advancePhase(); toggleDialog()}
+                  effect: ()=>{morningEvent('leave'); advancePhase(); toggleDialog()}
                 },
                 {
                   name: "Stay at camp", 
-                  effect: ()=>{campEvent(); advancePhase(); toggleDialog()}
+                  effect: ()=>{morningEvent('stay'); advancePhase(); toggleDialog()}
                 }
               ]
             })

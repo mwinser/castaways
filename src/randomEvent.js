@@ -93,6 +93,8 @@ const leftCamp = [
     },
     {
         string: "You found an immunity idol.",
+        change: 0,
+        players: 1,
         idol: true
     }
 ]
