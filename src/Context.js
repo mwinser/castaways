@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react'
 import NewGame from './NewGame'
-import {onePlayerEvents, twoPlayerEvents, stayedAtCamp, leftCamp} from './randomEvent'
+import {stayedAtCamp, leftCamp} from './randomEvent'
 
 const Context = React.createContext(null)
 
@@ -221,29 +221,6 @@ function ContextProvider ({children}) {
         
     }
 
-    function randomSocialEvent() {
-        const numInvolved = ~~(Math.random()*2)+1
-        const playersInvolved = randomPlayers(numInvolved)
-        
-        switch (numInvolved){
-            case 1:
-                var {string, change} = onePlayerEvents[~~(Math.random()*onePlayerEvents.length)]
-                console.log(playersInvolved[0] + string + ' Group loyalty changed by ' + change)
-                const everyoneElse = playerState.filter(player=>player.name!==playersInvolved[0]).map(player=>player.name)
-                everyoneElse.map(playerName=>changeLoyalty(playerName,playersInvolved[0], change))
-                return null
-            case 2:
-                // eslint-disable-next-line
-                var {string, change} = twoPlayerEvents[~~(Math.random()*twoPlayerEvents.length)]
-
-                console.log(playersInvolved[0] + " and " + playersInvolved[1] + string + ' Loyalty changed by ' + change)
-                changeLoyalty(playersInvolved[0], playersInvolved[1], change)
-                changeLoyalty(playersInvolved[1], playersInvolved[0], change)
-                return null
-            default:
-                return null
-        }
-    }
 
     
     return(
@@ -262,7 +239,6 @@ function ContextProvider ({children}) {
                 removePlayer,
                 changeLoyalty,
                 immunityChallenge,
-                randomSocialEvent,
                 morningEvent,
                 resetPlayers,
                 changeDialogData
