@@ -58,6 +58,7 @@ html, body {
   color: white;
   font-weight: bold;
   border-radius: 1em;
+  cursor: pointer;
 }
 .header {
   position: absolute;
