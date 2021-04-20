@@ -172,12 +172,20 @@ function ContextProvider ({children}) {
         const winner = participants.reduce((best, participant)=>{
             var value = participant[trait]
             if (participant.name===userPlayer){
-                effort==="beast mode"? (value+=3) : (value-=3)
+                switch (effort){
+                    case 'beast mode':
+                        value+=3
+                        break
+                    case 'lay low':
+                        value-=3
+                        break
+                    default:
+                        break
+                }
             }
             return value>best[trait]? participant : best}
             , {[trait]: 0 })
-       addToLogs(winner.name + " has won immunity in a "+ trait + "-based challenge!")
-        //apply idol
+        addToLogs(winner.name + " has won immunity in a "+ trait + "-based challenge!")
         setPlayerIdol(winner.name, true)
 
     }

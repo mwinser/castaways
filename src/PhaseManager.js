@@ -46,14 +46,18 @@ function PhaseManager(){
           case 'AFTERNOON':
             changeDialogData({
               title:"Immunity Challenge" ,
-              content:"Everyday is a challenge, literally. Today will you be extra competitive or take it easy?" ,
+              content:"Everyday is a challenge, literally. How hard will you compete?" ,
               choices:[
                 {
                   name: "BEAST MODE", 
                   effect: ()=>{immunityChallenge(playerState, 'beast mode'); advancePhase(); toggleDialog()}
                 },
                 {
-                  name: "Lay low", 
+                  name: "Normal effort", 
+                  effect: ()=>{immunityChallenge(playerState, "normal"); advancePhase(); toggleDialog()}
+                },
+                {
+                  name: "Conserve energy", 
                   effect: ()=>{immunityChallenge(playerState, "lay low"); advancePhase(); toggleDialog()}
                 }
             ]
