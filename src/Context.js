@@ -221,7 +221,7 @@ function ContextProvider ({children}) {
         return output
     }
     function morningEvent(playerChoice){
-        let event
+        let event = {}
         if (playerChoice==='stay'){
             event = stayedAtCamp[~~(Math.random()*stayedAtCamp.length)]
         }

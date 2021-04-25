@@ -96,6 +96,46 @@ const leftCamp = [
         change: 0,
         players: 1,
         idol: true
+    },
+    {
+        string: " found they had something in common.",
+        change: 5,
+        players: 2
+    },
+    {
+        string: " had a deep conversation.",
+        change: 10,
+        players: 2
+    },
+    {
+        string: " became friends.",
+        change: 20,
+        players: 2
+    },
+    {
+        string: " formed a secret alliance.",
+        change: 30,
+        players: 2
+    },
+    {
+        string: " had a minor disagreement.",
+        change: -5,
+        players: 2
+    },
+    {
+        string: " had a heated argument.",
+        change: -10,
+        players: 2
+    },
+    {
+        string: " had a major social fight.",
+        change: -20,
+        players: 2
+    },
+    {
+        string: " had a major falling-out.",
+        change: -30,
+        players: 2
     }
 ]
 
