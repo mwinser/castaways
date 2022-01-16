@@ -211,12 +211,12 @@ function ContextProvider ({children}) {
     }
     function randomPlayers(number){
         const output = []
-        var playervoteeNames = playerState.map(player=>player.name)
+        var availablePlayers = playerState.map(player=>player.name).filter(name=>name!==userPlayer)
         for (var i=0;i<number;i++) {
-            const selected = ~~(Math.random()*playervoteeNames.length)
-            const selectedPlayer = playervoteeNames[selected]
+            const selected = ~~(Math.random()*availablePlayers.length)
+            const selectedPlayer = availablePlayers[selected]
             output.push(selectedPlayer)
-            playervoteeNames = playervoteeNames.filter((name)=>name!==selectedPlayer)
+            availablePlayers = availablePlayers.filter((name)=>name!==selectedPlayer)
         }
         return output
     }
@@ -241,6 +241,7 @@ function ContextProvider ({children}) {
         }
         if (event.players===2){
         const otherPlayer = randomPlayers(1)[0]
+       
         
         changeLoyalty(userPlayer, otherPlayer, event.change)
         changeLoyalty(otherPlayer, userPlayer, event.change)
